@@ -1,23 +1,72 @@
-import logo from './logo.svg';
+import Cards from './Components/Cards'
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+    <br/><br/><br/> 
+     <div className="row">
+    <div className="col-sm-6">
+      <Cards 
+      experience="10"
+      doctorName="Dr. Swapnil Katre"
+      speciality="Ayurveda"
+      rating="4.7"
+      clinicName="Ayushman Bhava Ayurveda & Keraliya Panchkarma Clinic"
+      price="750"
+      feedbackNumber="778"
+      areaNearby="3.1"
+      area="Gunjal Baba Nagar"
+      />
+     </div>
+    <br/><br/><br/><br/><br/> <br/> <br/>  
+    <div className="col-sm-6">
+      <Cards 
+      experience="10"
+      doctorName="Dr. Swapnil Krishnakant Katre"
+      speciality="Ayurveda"
+      rating="4.7"
+      clinicName="Ayushman Bhava Ayurveda & Keraliya Panchkarma Clinic"
+      price="750"
+      feedbackNumber="778"
+      areaNearby="3.1"
+      area="Gunjal Baba Nagar"
+      />
+      </div>
+    
+<br/><br/><br/><br/><br/><br/>
+      <div className="col-sm-6">
+      <br/><br/><br/><br/><br/><br/>
+     <Cards 
+      experience="10"
+      doctorName="Dr. Swapnil Katre"
+      speciality="Ayurveda"
+      rating="4.7"
+      clinicName="Suddata Clinic"
+      price="750"
+      feedbackNumber="778"
+      areaNearby="3.1"
+      area="Gunjal Baba Nagar"
+      />
+  </div>
+
+ <br/><br/><br/><br/><br/><br/>
+ <div className="col-sm-6">
+ <br/><br/><br/><br/><br/><br/>
+    <Cards 
+      experience="10"
+      doctorName="Dr. Swapnil Katre"
+      speciality="Ayurveda"
+      rating="4.7"
+      clinicName="Kundan Multispeciality"
+      price="750"
+      feedbackNumber="778"
+      areaNearby="3.1"
+      area="Gunjal Baba Nagar"
+      /> 
+      </div>
+      <br/><br/><br/><br/><br/><br/>
+    </div>
     </div>
   );
 }
