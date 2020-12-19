@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/upcloud-mydoctors/static/css/main.b93eac30.chunk.css",
+    "main.js": "/upcloud-mydoctors/static/js/main.c085158c.chunk.js",
+    "main.js.map": "/upcloud-mydoctors/static/js/main.c085158c.chunk.js.map",
+    "runtime-main.js": "/upcloud-mydoctors/static/js/runtime-main.4504f63b.js",
+    "runtime-main.js.map": "/upcloud-mydoctors/static/js/runtime-main.4504f63b.js.map",
+    "static/css/2.8757ddda.chunk.css": "/upcloud-mydoctors/static/css/2.8757ddda.chunk.css",
+    "static/js/2.5e59f072.chunk.js": "/upcloud-mydoctors/static/js/2.5e59f072.chunk.js",
+    "static/js/2.5e59f072.chunk.js.map": "/upcloud-mydoctors/static/js/2.5e59f072.chunk.js.map",
+    "index.html": "/upcloud-mydoctors/index.html",
+    "static/css/2.8757ddda.chunk.css.map": "/upcloud-mydoctors/static/css/2.8757ddda.chunk.css.map",
+    "static/css/main.b93eac30.chunk.css.map": "/upcloud-mydoctors/static/css/main.b93eac30.chunk.css.map",
+    "static/js/2.5e59f072.chunk.js.LICENSE.txt": "/upcloud-mydoctors/static/js/2.5e59f072.chunk.js.LICENSE.txt",
+    "static/media/image5.00a3987d.jpeg": "/upcloud-mydoctors/static/media/image5.00a3987d.jpeg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4504f63b.js",
+    "static/css/2.8757ddda.chunk.css",
+    "static/js/2.5e59f072.chunk.js",
+    "static/css/main.b93eac30.chunk.css",
+    "static/js/main.c085158c.chunk.js"
+  ]
+}
