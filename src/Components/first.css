@@ -1,0 +1,81 @@
+
+/* 
+.div2{
+    background-color: white;
+    margin-bottom: 50px;
+} */
+
+
+.navbar{
+    background-color: #000000 !important;
+    height: 100px;
+    vertical-align: bottom;
+    align-items: flex-end !important;
+    padding: 0.5rem 4.5rem 0.6rem 4.5rem !important;
+}
+
+.nav-link{
+    margin-right: 40px;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 22px;
+    color: #ffffff !important;
+}
+
+
+
+
+.heading{
+
+    text-align: left;
+}
+ .bg-dark{
+     background-color: black;
+ }
+.parallax {
+    min-height: 512px; 
+    background-image: url('../images/pic.png');
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding-top: 315px;
+}
+  
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+    margin-right: 30% !important;
+    margin-left: 29.2% !important;
+    padding-top: 10px !important;
+}
+
+.fa{
+    font-size: 20px !important;
+}
+
+  .input{
+      margin: auto;
+      align-items: center;
+  }
+
+  .search{
+      border-radius: 20px !important;
+      width: 670px !important;
+      height: 60px !important;
+      margin-right: 30% !important;
+      margin-left: 29% !important;
+  }
