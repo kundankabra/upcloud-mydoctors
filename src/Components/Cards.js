@@ -2,16 +2,15 @@ import React, { Component } from 'react'
 import './Cards.css'
 import image5 from '../images/image5.jpeg'
 
-export class Cards extends Component {
-    render() {
+function Cards(props){
+    console.log(props)
         return (
-            <div className="container">
                 <div className="cards">
                     {/* first row consisting years of experience, image, Name, Speciality, Area, verification and bookmark */}
                     <div className="row Cards_firstRow">
                         {/* experience */}
                         <div className="col-1">
-                            <span className="Cards_experience">{this.props.experience}</span>
+                            <span className="Cards_experience">{props.experience}</span>
                         </div>
                         {/* image of doctor */}
                         <div className="col-2 Cards_docPic">
@@ -25,10 +24,10 @@ export class Cards extends Component {
                         <div className="col-7 Cards_doctorInfo">
                             <div>
                                 <div className="Cards_doctorName">
-                                    {this.props.doctorName} 
+                                    {props.doctorName} 
                                 </div>
                                 <div className="Cards_doctorSpeciality">
-                                    {this.props.speciality} 
+                                    {props.speciality} 
                                     {/* the small vertical line */}
                                     <span className="Cards_vrline">
                                     <svg width="2" height="13" viewBox="0 0 2 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,7 +36,7 @@ export class Cards extends Component {
                                     </span>
 
                                     <span className="Cards_rating">
-                                    {this.props.rating}                                    
+                                    {props.rating}                                    
                                     </span>
                                     <span className="Cards_thumbs">
                                     <img className="Cards_thumbs_svg" src="https://img.icons8.com/material-rounded/24/4a90e2/thumb-up.png"/>
@@ -77,14 +76,14 @@ export class Cards extends Component {
                     <div className="row Cards_secondRow">
                         <div className="col-9 Cards_clinicName_col align-middle">
                             <div className="Cards_clinicName">
-                                {this.props.clinicName}
+                                {props.clinicName}
                             </div>
                         </div>
 
                         <div className="col-3 Cards_price_col align-middle">
                             <div className="Cards_price">
                                 <span className="Cards_rsSign">₹</span>
-                                <span className="Cards_rs">{this.props.price}</span>
+                                <span className="Cards_rs">{props.price}</span>
                             </div>
                         </div>
                     </div>
@@ -92,14 +91,14 @@ export class Cards extends Component {
                     <div className="row Cards_thirdRow">
                         <div className="col-3 Cards_feedback_col">
                             <div className="Cards_feedback_div">
-                                <span className="Cards_feedbackNumber">{this.props.feedbackNumber}</span>
+                                <span className="Cards_feedbackNumber">{props.feedbackNumber}</span>
                                 <div className="Cards_feedback">Feedback</div>
                             </div>
                         </div>
                         <div className="col-4 Cards_area_col">
                             <div className="Cards_area_div">
-                                <span className="Cards_areaNearby">~{this.props.areaNearby}km~</span>
-                                <div className="Cards_area">{this.props.area}</div>
+                                <span className="Cards_areaNearby">~{props.areaNearby}km~</span>
+                                <div className="Cards_area">{props.area}</div>
                             </div>
                         </div>
                         <div className="col-5 Cards_button_col">
@@ -117,10 +116,9 @@ export class Cards extends Component {
                     </div>
 
                 </div>
-            </div>
-        )
+            
+        );
         
-    }
 }
 
 export default Cards

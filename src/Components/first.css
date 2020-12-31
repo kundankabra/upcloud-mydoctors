@@ -1,9 +1,8 @@
 
-/* 
-.div2{
-    background-color: white;
-    margin-bottom: 50px;
-} */
+ 
+.navbar_div{
+    background-color: wheat !important;
+} 
 
 
 .navbar{
@@ -24,58 +23,3 @@
     color: #ffffff !important;
 }
 
-
-
-
-.heading{
-
-    text-align: left;
-}
- .bg-dark{
-     background-color: black;
- }
-.parallax {
-    min-height: 512px; 
-    background-image: url('../images/pic.png');
-    background-position: center;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    padding-top: 315px;
-}
-  
-.has-search .form-control {
-    padding-left: 2.375rem;
-}
-
-.has-search .form-control-feedback {
-    position: absolute;
-    z-index: 2;
-    display: block;
-    width: 2.375rem;
-    height: 2.375rem;
-    line-height: 2.375rem;
-    text-align: center;
-    pointer-events: none;
-    color: #aaa;
-    margin-right: 30% !important;
-    margin-left: 29.2% !important;
-    padding-top: 10px !important;
-}
-
-.fa{
-    font-size: 20px !important;
-}
-
-  .input{
-      margin: auto;
-      align-items: center;
-  }
-
-  .search{
-      border-radius: 20px !important;
-      width: 670px !important;
-      height: 60px !important;
-      margin-right: 30% !important;
-      margin-left: 29% !important;
-  }
