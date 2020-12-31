@@ -37,8 +37,6 @@ const Gender = [
 ];
 
 
-var count = 0;
-var flag = false;
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -71,16 +69,16 @@ export class App extends Component {
 
     constructor(){
       super();
-      this.myRef = React.createRef();
+      this.myRef = React.createRef();   //for the executeScroll function
       this.state={
-        searchDoc:null,
-        newItems: [],
-        selectedNewItems:[],
-        searchCity : '',
-        value: '',
-        suggestions: [],
-        datas : Data,
-        selectedGender : ''
+        newItems: [],         //array which will render only one time after the starting search
+        selectedNewItems:[],  //an array which will render every time after changes like filters
+        searchCity : '',      //City input change state
+        searchLocality : '',  //Locality input change state
+        value: '',            //Speciality, doctors and clinic input change state
+        suggestions: [],      //For suggestions on speciality input
+        datas : Data,         
+        selectedGender : ''   //For gender change state
       };
     }
     
@@ -98,13 +96,36 @@ export class App extends Component {
     };
     // gettng user input into variables-changing state
 
+    filterLocality = () => {
+      let distinctLocality = [];
+      //this.state.datas.map((obj) =>distinctLocality.push(obj.area)); 
+        this.state.datas.filter((item) => {
+          if (this.state.searchCity.toLowerCase()===item.city.toLowerCase()) {
+            distinctLocality.push(item.area);
+          }
+        })
+        console.log(distinctLocality,this.state.searchCity)
+        distinctLocality = [...new Set(distinctLocality)];
+        return distinctLocality;
+    };
+
+
     searchFromCity=(event)=>{
-      let keyword_B = event.target.value;
-      console.log(keyword_B)
+      let keyword_A = event.target.value;
+      console.log('City:',keyword_A)
       this.setState({
-        searchCity:keyword_B
+        searchCity:keyword_A
       })
     }
+
+    searchFromLocality=(event)=>{
+      let keyword_B = event.target.value;
+      console.log('Locality',keyword_B)
+      this.setState({
+        searchLocality:keyword_B
+      })
+    }
+
 
     onChange_doc = (event, { newValue, method }) => {
       this.setState({
@@ -150,21 +171,25 @@ export class App extends Component {
 
     itemsArrayFilter = () => {
       const items = Data.filter(data => {
-      if(this.state.value == null){
-        return null;
-      }
-      if(this.state.value == ""){
-         return null;
-       }
-      else if(data.city.toLowerCase().includes(this.state.searchCity.toLowerCase())){
-        if (data.doctorName.toLowerCase().includes(this.state.value.toLowerCase()) || data.speciality.toLowerCase().includes(this.state.value.toLowerCase()) || data.clinicName.toLowerCase().includes(this.state.value.toLowerCase())){
-          {this.executeScroll()}
-          return data;
+        if (this.state.value == null) {
+          return null;
         }
-      }
-      else{
-        return null
-      }    
+        if (this.state.value === "") {
+          return null;
+        }
+        else if (data.city.toLowerCase().includes(this.state.searchCity.toLowerCase())) {
+
+          if (data.area.toLowerCase().includes(this.state.searchLocality.toLowerCase())) {
+
+            if (data.doctorName.toLowerCase().includes(this.state.value.toLowerCase()) || data.speciality.toLowerCase().includes(this.state.value.toLowerCase()) || data.clinicName.toLowerCase().includes(this.state.value.toLowerCase())) {
+              { this.executeScroll() }
+              return data;
+            }
+          }
+        }
+        else {
+          return null
+        }    
     }) 
     this.setState({
       newItems : items
@@ -220,11 +245,12 @@ export class App extends Component {
     return(
   <div>
       <First/>
-      <div class="parallax">
-              
+
+        <div class="parallax">
           <div className="row first_search_row ">
-              {/* Search for city */}
-              <div className="col-sm-3 search_city_col">
+
+            <div className="col-sm-3 search_city_col">
+              {/* ---Search for city ---*/}
               <div className="form-group has-search">
                 <span class="fa fa-search form-control-city"></span>
                 <select
@@ -234,7 +260,7 @@ export class App extends Component {
                 >
                   <option value="" disabled selected>
                     Select City
-                </option>
+                  </option>
                   {this.filterCity().map((state, index) => (
                     <option value={state} key={index}>
                       {state}
@@ -243,47 +269,66 @@ export class App extends Component {
                 </select>
                 <div className="detect_location"><a>detect my location</a></div>
               </div>
-
-               {/* <input type="text" className="search_city form-control" onChange={(e)=>this.searchFromCity(e)} autoComplete="off" placeholder="City" /> */}
-
-              {/* </div> */}
-               {/*Search for locality*/}
-              {/* <div className="col-sm-2 search_locality_col"> */}
+              {/* <input type="text" className="search_city form-control" onChange={(e)=>this.searchFromCity(e)} autoComplete="off" placeholder="City" /> */}
+              {/*---Search for locality--*/}
               <div className="form-group has-search">
                 <span class="fa fa-search form-control-locality"></span>
-                <input type="text" className="search_locality form-control" placeholder="Locality" />
-            
+                {/* <input
+                  type="text"
+                  className="search_locality form-control"
+                  placeholder="Locality"
+                  onChange={this.searchFromLocality}
+                  value={this.state.searchLocality}
+                /> */}
+                <select
+                  className="search_locality form-control"
+                  onChange={this.searchFromLocality}
+                  // value={this.state.searchLocality}
+                  id="locality"
+                >
+                  <option value="" disabled selected>
+                    Select City
+                  </option>
+                  {this.filterLocality().map((locality, index) => (
+                    <option value={locality} key={index}>
+                      {locality}
+                    </option>
+                  ))}
+                </select>  
               </div>
-              </div>
-              {/* Search for speciality, doctors, clinic and services*/}
-              <div className="col-sm-6 search_doctors_col">
+            </div>
+
+            {/* ---Search for speciality, doctors, clinic and services---*/}
+            <div className="col-sm-6 search_doctors_col">
               <div className="input form-group has-search">
                 <span class="fa fa-search form-control-doctors"></span>
                 <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                shouldRenderSuggestions={shouldRenderSuggestions}
-                renderSuggestion={renderSuggestion}
-                inputProps={input_doc} />   
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  getSuggestionValue={getSuggestionValue}
+                  shouldRenderSuggestions={shouldRenderSuggestions}
+                  renderSuggestion={renderSuggestion}
+                  inputProps={input_doc} />
                 {/* <div className="detect_location">{this.state.selectedNewItems.length}</div> */}
-              </div> 
-              </div>
-              <div className="col-sm-3">
-                
               </div>
             </div>
-            
+
+            <div className="col-sm-3">
+
+            </div>
+          </div>
         </div>  
+{/* ------------------Container of cards and filter--------------------------------------------------------------------------- */}
       <div ref={this.myRef} className="Cards_container">
         
-        {/* if no doctor found */}
-        {this.state.selectedNewItems.length == 0 &&
+    {/*------------ if no doctor found----------------- */}
+       
+        {this.state.selectedNewItems.length === 0 &&
           <h3>No doctor found</h3>
         }
 
-{/* ----------------------------------if there are items--------------------------------------------------------------------------------- */}
+    {/* -------------if Doctors are Found----------------- */}
 
         {this.state.selectedNewItems.length > 0 &&
         <div>
@@ -384,7 +429,6 @@ export class App extends Component {
           </Sticky>
           </StickyContainer>
            
-          
           <div className="row row_of_cards">
             {this.renderCards()}
           </div>
