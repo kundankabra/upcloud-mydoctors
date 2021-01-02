@@ -225,6 +225,10 @@ html {
     padding-top: 20px;
   }
 
+  .selectGender{
+    width: 106px;
+  }
+
 .Cards_container{
         justify-content: center;
         position: relative;

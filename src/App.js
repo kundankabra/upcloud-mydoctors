@@ -6,6 +6,7 @@ import './App.css';
 import { StickyContainer, Sticky } from 'react-sticky';
 import React, { Component } from 'react';
 import Select from 'react-select'
+import sortjsonarray from 'sort-json-array';
 
 const uniqueInfo = [
   {
@@ -36,6 +37,28 @@ const Gender = [
   { value: 'female', label: 'Female' }
 ];
 
+// pl2h: price low to high
+// ph2l: price high to low
+const uniqueSort = [
+    {
+      value : "pl2h",
+      label : "Price low to high"
+    }, 
+    {
+      value: "ph2l",
+      label : "Price high to low"
+    }, 
+    {
+      value : "rating",
+      label : "by Rating"
+    }, 
+    {
+      value : "area",
+      label : "by Area"
+    }
+];
+
+var sortJsonArray = require('sort-json-array');
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -78,7 +101,8 @@ export class App extends Component {
         value: '',            //Speciality, doctors and clinic input change state
         suggestions: [],      //For suggestions on speciality input
         datas : Data,         
-        selectedGender : ''   //For gender change state
+        selectedGender : '',   //For gender change state,
+        sort : ''
       };
     }
     
@@ -135,10 +159,33 @@ export class App extends Component {
     });
       
     };
+
+  handleSort = (sort) => {
+    this.setState({sort:sort.value });
+    let SORT = sort.value;  
+    var des = "des"
+    //price low to high
+    if (SORT == "pl2h") {
+      sortJsonArray(this.state.newItems,'price')
+    }
+    //price high to low
+    if (SORT == "ph2l") {
+      sortJsonArray(this.state.newItems,'price',des)
+    }
+    //Rating
+    if (SORT == "rating") {
+      sortJsonArray(this.state.newItems,'rating',des)
+    }
+    //area
+    if (SORT == "area") {
+      sortJsonArray(this.state.newItems,'areaNearby')
+    }
+  }  
     
   handleGender = (selectedGender) => {
-      // console.log(selectedGender)
-      // this.setState({ selectedGender:selectedGender.value });
+      
+      this.setState({ selectedGender:selectedGender.value });
+     
       let gender = selectedGender.value;
       const temp = this.state.newItems.filter((item) => {
         if (item.gender.toLowerCase()===gender.toLowerCase()) {
@@ -151,7 +198,8 @@ export class App extends Component {
       })
      
       this.setState({
-        selectedNewItems: temp
+        selectedNewItems: temp,
+        newItems : temp
       })
     };
 
@@ -332,102 +380,102 @@ export class App extends Component {
 
         {this.state.selectedNewItems.length > 0 &&
         <div>
-          <StickyContainer>
-          <Sticky>{() => 
-          <div className="row filter_row">
-           <div className="col-sm-3 cityandlocality_colInFilter">
+            <StickyContainer>
+              <Sticky>{() =>
+                <div className="row filter_row">
+                  <div className="col-sm-4 cityandlocality_colInFilter">
 
-           <div className="form-group has-search">
-                {/* <span class="fa fa-search form-control-city"></span> */}
-                <select
-                  className="search_cityInFilter form-control"
-                  onChange={this.searchFromCity}
-                  id="state"
-                >
-                  <option value="" disabled selected>
-                    City
-                </option>
-                  {this.filterCity().map((state, index) => (
-                    <option value={state} key={index}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
-                <div className="detect_location"><a>   detect my location</a></div>
-              </div>
+                    <div className="form-group has-search">
+                      {/* <span class="fa fa-search form-control-city"></span> */}
+                      <select
+                        className="search_cityInFilter form-control"
+                        onChange={this.searchFromCity}
+                        id="state"
+                      >
+                        <option value="" disabled selected>
+                          City
+                        </option>
+                        {this.filterCity().map((state, index) => (
+                          <option value={state} key={index}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+                      <div className="detect_location"><a>detect my location</a></div>
+                    </div>
 
-              <div className="form-group has-search">
-                {/* <span class="fa fa-search form-control-locality"></span> */}
-                <input type="text" className="search_localityInFilter form-control" placeholder="Locality" />
-            
-              </div>
-
-           </div>
-           <div className="col-sm-3 doctor_colInFilter">
-           <div className="input form-group has-search">
-                {/* <span class="fa fa-search form-control-doctors"></span> */}
-                <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                shouldRenderSuggestions={shouldRenderSuggestions}
-                renderSuggestion={renderSuggestion}
-                inputProps={input_doc_InFilter} />   
-                <div className="detect_location">You have {this.state.selectedNewItems.length} search results</div>
-              </div> 
-          </div>
-
-          <div class="col-1">
-                    <Select
-                      className="select_gender"
-                      value={selectedGender}
-                      onChange={this.handleGender}
-                      options={Gender}
-                      placeholder="Sort"
-                    />
-                  </div>
-          <div class="col-1">
-                  <div class="dropdown">
-                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                      Availability
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Today</a>
-                      <a class="dropdown-item" href="#">Tomorrow</a>
+                    <div className="form-group has-search">
+                      {/* <span class="fa fa-search form-control-locality"></span> */}
+                      <input type="text" className="search_localityInFilter form-control" placeholder="Locality" />
                     </div>
                   </div>
-          </div>
 
+                  <div className="col-sm-3 doctor_colInFilter">
+                    <div className="input form-group has-search">
+                      {/* <span class="fa fa-search form-control-doctors"></span> */}
+                      <Autosuggest
+                        suggestions={suggestions}
+                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                        getSuggestionValue={getSuggestionValue}
+                        shouldRenderSuggestions={shouldRenderSuggestions}
+                        renderSuggestion={renderSuggestion}
+                        inputProps={input_doc_InFilter} />
+                      <div className="detect_location">You have {this.state.selectedNewItems.length} search results</div>
+                    </div>
+                  </div>
+
+                  {/*=====SORT======*/}
+                  <div class="col-1">
+                    <Select
+                      className="selectSort"
+                      value={this.state.sort}
+                      onChange={this.handleSort}
+                      options={uniqueSort}
+                      placeholder="Sort"
+                    />
+                    <div className="detect_location">{this.state.sort.label}</div>                    
+                  </div>
+
+                  <div class="col-1">
+                    <div class="dropdown">
+                      <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                        Availability
+                    </button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Today</a>
+                        <a class="dropdown-item" href="#">Tomorrow</a>
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="col-1">
                     <Select
-                      className="select_gender"
+                      className="selectGender"
                       value={selectedGender}
                       onChange={this.handleGender}
                       options={Gender}
                       placeholder="Gender"
                     />
+                    <div className="detect_location">{this.state.selectedGender}</div>  
                   </div>
 
-                  
-<div class="col-1">
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Price
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
+                  <div class="col-1">
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Price
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                      </div>
+                    </div>
+                  </div>
 
-</div>
-        
-          </div>}
-          </Sticky>
-          </StickyContainer>
+                </div>}
+              </Sticky>
+            </StickyContainer>
            
           <div className="row row_of_cards">
             {this.renderCards()}
