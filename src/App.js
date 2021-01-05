@@ -58,6 +58,25 @@ const uniqueSort = [
     }
 ];
 
+const Price = [
+  {
+    value : "Below-250",
+    label : "Below 250"
+  }, 
+  {
+    value: "251-500",
+    label : "251-500"
+  }, 
+  {
+    value : "501-750",
+    label : "501-750"
+  }, 
+  {
+    value : "Above-751",
+    label : "Above 751"
+  }
+];
+
 var sortJsonArray = require('sort-json-array');
 
 function escapeRegexCharacters(str) {
@@ -102,7 +121,8 @@ export class App extends Component {
         suggestions: [],      //For suggestions on speciality input
         datas : Data,         
         selectedGender : '',   //For gender change state,
-        sort : ''
+        sort : '',
+        selectedPrice : ''
       };
     }
     
@@ -166,19 +186,19 @@ export class App extends Component {
     var des = "des"
     //price low to high
     if (SORT == "pl2h") {
-      sortJsonArray(this.state.newItems,'price')
+      sortJsonArray(this.state.selectedNewItems,'price')
     }
     //price high to low
     if (SORT == "ph2l") {
-      sortJsonArray(this.state.newItems,'price',des)
+      sortJsonArray(this.state.selectedNewItems,'price',des)
     }
     //Rating
     if (SORT == "rating") {
-      sortJsonArray(this.state.newItems,'rating',des)
+      sortJsonArray(this.state.selectedNewItems,'rating',des)
     }
     //area
     if (SORT == "area") {
-      sortJsonArray(this.state.newItems,'areaNearby')
+      sortJsonArray(this.state.selectedNewItems,'areaNearby')
     }
   }  
     
@@ -187,7 +207,7 @@ export class App extends Component {
       this.setState({ selectedGender:selectedGender.value });
      
       let gender = selectedGender.value;
-      const temp = this.state.newItems.filter((item) => {
+      const temp = this.state.selectedNewItems.filter((item) => {
         if (item.gender.toLowerCase()===gender.toLowerCase()) {
           console.log("found",item.gender)
           return item;
@@ -202,6 +222,54 @@ export class App extends Component {
         newItems : temp
       })
     };
+
+  handlePrice = (selectedPrice) => {
+    this.setState({selectedPrice : selectedPrice.value});
+    let price = selectedPrice.value;
+
+    const tempPrice = this.state.newItems.filter((item) => {
+      if (price === "Below-250") {
+        if (item.price <= 250) {
+          console.log("found", item.price)
+          return item;
+        }
+        else {
+          return null
+        }
+      }
+      if (price === "251-500") {
+        if (item.price > 250 && item.price <=500) {
+          console.log("Pahuchaaaaa", item.price)
+          return item;
+        }
+        else {
+          return null
+        }
+      }
+      if (price === "501-750") {
+        if (item.price > 500 && item.price <=750) {
+          console.log("found", item.price)
+          return item;
+        }
+        else {
+          return null
+        }
+      }
+      if (price === "Above-751") {
+        if (item.price > 750) {
+          console.log("found", item.price)
+          return item;
+        }
+        else {
+          return null
+        }
+      }
+    })
+
+    this.setState({
+      selectedNewItems: tempPrice,
+    })
+  };  
 
     onSuggestionsFetchRequested = ({ value }) => {
       this.setState({
@@ -267,7 +335,7 @@ export class App extends Component {
     }
     
   render(){
-    const { value, suggestions, selectedGender, newItems} = this.state;
+    const { value, suggestions, selectedGender, newItems, selectedPrice} = this.state;
     const input_doc = {
       placeholder: "Search for Doctors, Clinics, Services & more..",
       value,
@@ -410,7 +478,8 @@ export class App extends Component {
                     </div>
                   </div>
 
-                  <div className="col-sm-3 doctor_colInFilter">
+                  <div className="col-sm-4 doctor_colInFilter">
+                    
                     <div className="input form-group has-search">
                       {/* <span class="fa fa-search form-control-doctors"></span> */}
                       <Autosuggest
@@ -423,10 +492,8 @@ export class App extends Component {
                         inputProps={input_doc_InFilter} />
                       <div className="detect_location">You have {this.state.selectedNewItems.length} search results</div>
                     </div>
-                  </div>
 
-                  {/*=====SORT======*/}
-                  <div class="col-1">
+                      {/*=====SORT======*/}
                     <Select
                       className="selectSort"
                       value={this.state.sort}
@@ -437,19 +504,24 @@ export class App extends Component {
                     <div className="detect_location">{this.state.sort.label}</div>                    
                   </div>
 
-                  <div class="col-1">
-                    <div class="dropdown">
-                      <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                        Availability
-                    </button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Today</a>
-                        <a class="dropdown-item" href="#">Tomorrow</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-1">
+    
+                  <div class="col-sm-4 availablity_colinFilter">
+                  <select
+                        className="availablity form-control"
+                        onChange={this.searchFromCity}
+                        id="state"
+                      >
+                        <option value="" disabled selected>
+                          Availablity
+                        </option>
+                          <option value= "">
+                            Today
+                          </option>
+                          <option value= "">
+                            Tomorrow
+                          </option>
+                        </select>
+                  <div className="gender">
                     <Select
                       className="selectGender"
                       value={selectedGender}
@@ -459,21 +531,20 @@ export class App extends Component {
                     />
                     <div className="detect_location">{this.state.selectedGender}</div>  
                   </div>
-
-                  <div class="col-1">
-                    <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Price
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                      </div>
-                    </div>
+    
+                  <Select
+                      className="selectPrice"
+                      value={selectedPrice}
+                      onChange={this.handlePrice}
+                      options={Price}
+                      placeholder="Price"
+                    />
+                    <div className="detect_location">{this.state.selectedPrice}</div>
                   </div>
-
-                </div>}
+                </div>
+                
+                
+                }
               </Sticky>
             </StickyContainer>
            
