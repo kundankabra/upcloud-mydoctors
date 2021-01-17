@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/upcloud-mydoctors/static/css/main.b1e6724a.chunk.css",
+    "main.css": "/upcloud-mydoctors/static/css/main.56b7679e.chunk.css",
     "main.js": "/upcloud-mydoctors/static/js/main.e58b67b6.chunk.js",
     "main.js.map": "/upcloud-mydoctors/static/js/main.e58b67b6.chunk.js.map",
     "runtime-main.js": "/upcloud-mydoctors/static/js/runtime-main.4504f63b.js",
@@ -10,7 +10,7 @@
     "static/js/2.e2ad892c.chunk.js.map": "/upcloud-mydoctors/static/js/2.e2ad892c.chunk.js.map",
     "index.html": "/upcloud-mydoctors/index.html",
     "static/css/2.5080a81d.chunk.css.map": "/upcloud-mydoctors/static/css/2.5080a81d.chunk.css.map",
-    "static/css/main.b1e6724a.chunk.css.map": "/upcloud-mydoctors/static/css/main.b1e6724a.chunk.css.map",
+    "static/css/main.56b7679e.chunk.css.map": "/upcloud-mydoctors/static/css/main.56b7679e.chunk.css.map",
     "static/js/2.e2ad892c.chunk.js.LICENSE.txt": "/upcloud-mydoctors/static/js/2.e2ad892c.chunk.js.LICENSE.txt",
     "static/media/font-awesome.min.css": "/upcloud-mydoctors/static/media/fontawesome-webfont.f691f37e.woff",
     "static/media/image5.00a3987d.jpeg": "/upcloud-mydoctors/static/media/image5.00a3987d.jpeg",
@@ -20,7 +20,7 @@
     "static/js/runtime-main.4504f63b.js",
     "static/css/2.5080a81d.chunk.css",
     "static/js/2.e2ad892c.chunk.js",
-    "static/css/main.b1e6724a.chunk.css",
+    "static/css/main.56b7679e.chunk.css",
     "static/js/main.e58b67b6.chunk.js"
   ]
 }
