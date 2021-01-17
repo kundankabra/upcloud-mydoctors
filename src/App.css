@@ -49,7 +49,7 @@ html {
   .cityandlocality_colInFilter{
     display: flex; 
     justify-content: center;
-    flex-basis: 30.3333% !important;
+    /* flex-basis: 30.3333% !important; */
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
@@ -126,11 +126,9 @@ html {
 
   .doctor_colInFilter{
      display: flex; 
-    padding-left: 0px!important;
-    padding-right: 0px !important;
-    /* flex-basis:  !important; */
-    flex : 0 0 22% !important;
-    max-width: 33% !important;
+    padding-left: 10px!important;
+    padding-right: 10px !important;
+    justify-content: space-evenly;
   }
   
   /* search icon of doctors field */
@@ -160,7 +158,6 @@ html {
 
 .search_doctorsInFilter{
   display: flex !important;
-  justify-self: start;
   border-radius: 15px !important;
   width: 270px !important;
   height: 50px !important;
@@ -171,16 +168,20 @@ html {
   height: 50px !important;
 }
 
+.selectSortDiv{
+  display: flex;
+}
+
 .selectSort{
   width: 85px !important;
-  margin-left: 25px;
+  margin-left: 0px;
 }
 
 .availablity_colinFilter{
   display: flex;
   padding-left: 0!important;
   padding-right: 0!important;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .availablity{
@@ -270,12 +271,12 @@ html {
 
   .selectGender{
     width: 106px;
-    margin-left: 27px;
+    /* margin-left: 27px; */
   }
 
   .selectPrice{
     width: 106px;
-    margin-left: 27px;
+    /* margin-left: 27px; */
   }
 
 .Cards_container{

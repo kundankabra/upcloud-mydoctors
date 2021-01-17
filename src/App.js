@@ -629,7 +629,7 @@ export class App extends Component {
 
                   <div className="col-sm-4 doctor_colInFilter">
                     
-                    <div className="input form-group has-search">
+                    <div className="">
                       {/* <span class="fa fa-search form-control-doctors"></span> */}
                       <Autosuggest
                         suggestions={suggestions}
@@ -643,7 +643,7 @@ export class App extends Component {
                     </div>
 
                       {/*=====SORT======*/}
-                    <div>  
+                    <div className="">  
                     <Select
                       className="selectSort"
                       value={this.state.sort}
