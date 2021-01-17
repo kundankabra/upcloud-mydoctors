@@ -525,7 +525,7 @@ export class App extends Component {
                   id="state"
                 >
                   <option value="" disabled selected>
-                    Select City
+                    City
                   </option>
                   {this.filterCity().map((state, index) => (
                     <option value={state} key={index}>
@@ -553,7 +553,7 @@ export class App extends Component {
                   id="locality"
                 >
                   <option value="" disabled selected>
-                    Select City
+                    Locality
                   </option>
                   {this.filterLocality().map((locality, index) => (
                     <option value={locality} key={index}>
