@@ -3,10 +3,11 @@ import Cards from './Components/Cards';
 import Data from './Components/Data';
 import Autosuggest from 'react-autosuggest';
 import './App.css';
-import { StickyContainer, Sticky } from 'react-sticky';
+//import { StickyContainer, Sticky } from 'react-sticky';
 import React, { Component } from 'react';
-import Select from 'react-select'
-import sortjsonarray from 'sort-json-array';
+import Select from 'react-select';
+//import sortjsonarray from 'sort-json-array';
+import './Components/avail.css'
 
 const uniqueInfo = [
   {
@@ -37,6 +38,8 @@ const Gender = [
   { value: 'female', label: 'Female' }
 ];
 
+
+var sortJsonArray = require('sort-json-array');
 // pl2h: price low to high
 // ph2l: price high to low
 const uniqueSort = [
@@ -55,8 +58,51 @@ const uniqueSort = [
     {
       value : "area",
       label : "by Area"
+    },
+    {
+      value : "experience",
+      label : "By experience"
     }
 ];
+
+
+// To get Today's Date, which will be used in availability filter
+var d = new Date();
+var dayToday, dayTomorrow;
+console.log(d.getDay())
+const dateToday = d.getDay()
+if (dateToday === 0){
+  dayToday = "sunday";
+  dayTomorrow = "monday";
+}
+else if(dateToday === 1){
+  dayToday = "monday";
+  dayTomorrow = "tuesday";
+}
+else if(dateToday === 2){
+  dayToday = "tuesday";
+  dayTomorrow = "wednesday";
+}
+else if(dateToday === 3){
+  dayToday = "wednesday";
+  dayTomorrow = "thursday";
+}
+else if(dateToday === 4){
+  dayToday = "thursday";
+  dayTomorrow = "friday";
+}
+else if(dateToday === 5){
+  dayToday = "friday";
+  dayTomorrow = "saturday";
+}
+else if(dateToday === 6){
+  dayToday = "saturday";
+  dayTomorrow = "sunday";
+}
+
+
+
+
 
 const Price = [
   {
@@ -77,7 +123,6 @@ const Price = [
   }
 ];
 
-var sortJsonArray = require('sort-json-array');
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -119,10 +164,21 @@ export class App extends Component {
         searchLocality : '',  //Locality input change state
         value: '',            //Speciality, doctors and clinic input change state
         suggestions: [],      //For suggestions on speciality input
-        datas : Data,         
+        datas : Data,
+        availablityToday:'',
+        availablityTomorrow : '',         
         selectedGender : '',   //For gender change state,
         sort : '',
-        selectedPrice : ''
+        selectedPrice : '',
+        availToggle : false,
+        clickedDay : '',
+        monClicked : false,
+        tueClicked : false,
+        wedClicked : false,
+        thuClicked : false,
+        friClicked : false,
+        satClicked : false,
+        sunClicked : false,
       };
     }
     
@@ -130,6 +186,8 @@ export class App extends Component {
       this.setState({ datas: Data });
       this.setState({ newItems: Data });
       // this.setState({selectedNewItems:Data});
+      let filterNav = document.getElementsByClassName("filter_row");
+      var stickyTemp = filterNav.OffsetTop;
     }
 
     filterCity = () => {
@@ -200,14 +258,106 @@ export class App extends Component {
     if (SORT == "area") {
       sortJsonArray(this.state.selectedNewItems,'areaNearby')
     }
+     //area
+     if (SORT == "experience") {
+      sortJsonArray(this.state.selectedNewItems,'experience',des)
+    }
   }  
+
+
+  handleAvailablity = (e) =>{
+    this.setState(prevState => ({
+      availToggle: !prevState.availToggle
+    }));
+    console.log("avail",this.state.availToggle)
+  }
+
+  handleAvailablityToday = (e) => {
+   
+    this.setState({availablityToday : e.target.value})
+      const tempAvailToday = this.state.newItems.filter((item) => {
+        var morningSlot = JSON.parse(JSON.stringify(item.workingHours[dayToday].morning.slot));
+        var eveningSlot = JSON.parse(JSON.stringify(item.workingHours[dayToday].evening.slot));
+        if(morningSlot === -1 && eveningSlot === -1){
+          return null
+        }
+        else{
+          return item
+        }
+      });
+      this.setState({selectedNewItems : tempAvailToday})
+    }
+
+  handleAvailablityTomorrow = (e) => {
+    this.setState({ availablityTomorrow: e.target.value })  
+      const tempAvailTomorrow = this.state.newItems.filter((item) => {
+        var morningSlot = JSON.parse(JSON.stringify(item.workingHours[dayTomorrow].morning.slot));
+        var eveningSlot = JSON.parse(JSON.stringify(item.workingHours[dayTomorrow].evening.slot));
+        if(morningSlot === -1 && eveningSlot === -1){
+          return null
+        }
+        else{
+          return item
+        }
+      });
+      this.setState({selectedNewItems : tempAvailTomorrow})
+  }
+
+  handleAvailablityDays =(e) => {
+    this.setState({clickedDay : e.target.value})
+    let tempDay = e.target.value
+    // switch case used
+    switch (tempDay) {
+      case "mon":
+        this.setState(prevState => ({
+          monClicked: !prevState.monClicked
+        }));
+        const tempMondayClick = this.state.newItems.filter((item) => {
+          var morningSlot = JSON.parse(JSON.stringify(item.workingHours["monday"].morning.slot));
+          var eveningSlot = JSON.parse(JSON.stringify(item.workingHours["monday"].evening.slot));
+          if(morningSlot === -1 && eveningSlot === -1){
+            return null
+          }
+          else{
+            return item
+          }
+        });
+        this.setState({selectedNewItems : tempMondayClick})
+        break;
+
+      case "tue":
+        this.setState(prevState => ({
+          tueClicked: !prevState.tueClicked
+        }));
+        break;
+
+      case "wed":
+        this.setState(prevState => ({
+          wedClicked: !prevState.wedClicked
+        }));
+        break;
+      case "thu":
+
+        break;
+      case "fri":
+
+        break;
+      case "sat":
+
+        break;
+      case "sun":
+
+        break;
+      default:
+        break;
+    }
+  }
     
   handleGender = (selectedGender) => {
       
       this.setState({ selectedGender:selectedGender.value });
-     
       let gender = selectedGender.value;
-      const temp = this.state.selectedNewItems.filter((item) => {
+      const temp = this.state.newItems.filter((item) => {
         if (item.gender.toLowerCase()===gender.toLowerCase()) {
           console.log("found",item.gender)
           return item;
@@ -219,7 +369,7 @@ export class App extends Component {
      
       this.setState({
         selectedNewItems: temp,
-        newItems : temp
+        // newItems : temp
       })
     };
 
@@ -318,7 +468,7 @@ export class App extends Component {
     renderCards = () => {
       return(
       this.state.selectedNewItems.map ((data) =>(         
-        <div className="col-4 col-xs-12">
+        <div className="col-4 col-xs-12 cardsColumn">
           <Cards
             experience={data.experience}
             doctorName={data.doctorName}
@@ -448,8 +598,7 @@ export class App extends Component {
 
         {this.state.selectedNewItems.length > 0 &&
         <div>
-            <StickyContainer>
-              <Sticky>{() =>
+            
                 <div className="row filter_row">
                   <div className="col-sm-4 cityandlocality_colInFilter">
 
@@ -494,6 +643,7 @@ export class App extends Component {
                     </div>
 
                       {/*=====SORT======*/}
+                    <div>  
                     <Select
                       className="selectSort"
                       value={this.state.sort}
@@ -501,26 +651,91 @@ export class App extends Component {
                       options={uniqueSort}
                       placeholder="Sort"
                     />
-                    <div className="detect_location">{this.state.sort.label}</div>                    
+                    <div className="detect_location">{this.state.sort}</div>                    
+                    </div>      
                   </div>
 
-    
                   <div class="col-sm-4 availablity_colinFilter">
-                  <select
-                        className="availablity form-control"
-                        onChange={this.searchFromCity}
-                        id="state"
-                      >
-                        <option value="" disabled selected>
-                          Availablity
-                        </option>
-                          <option value= "">
-                            Today
-                          </option>
-                          <option value= "">
-                            Tomorrow
-                          </option>
-                        </select>
+                   <div> <button className="availablity" onClick={this.handleAvailablity}>Availability</button>
+                  {this.state.availToggle &&
+                    <div className="availDropDown">
+                      <div className="availCards">
+                        <div className="availCards_row-1">
+                          <span className="Cards_avail">Availability</span>
+                        </div>
+                        <div className="availCards_row-2">
+                          <a href="#" className="Today" ><button className="btn" onClick={this.handleAvailablityToday}>today</button></a>
+                          <hr />
+                          <a href="#" className="Tomo"><button className="btn" onClick={this.handleAvailablityTomorrow}>tomorrow</button></a>
+                          <hr />
+                        </div>
+
+                        <div className="availCards_row-3">
+                          <div className="Cards_button_div">
+                            <a href="#">
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="mon">M</button>
+                            </a>
+
+                            <a href="#">
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="tue">T</button>
+                            </a>
+
+                            <a href="#">
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="wed">W</button>
+                            </a>
+
+                            <a href="#">
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="thu">T</button>
+                            </a>
+
+                            <a href="#">
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="fri">F</button>
+                            </a>
+
+                            <a href="#">
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="sat">S</button>
+                            </a>
+                            <a href="#">
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="sun">S</button>
+                            </a>
+                          </div>
+                        </div>
+                        <div className="availCards_row-4">
+                          <div className="Cards_button_div">
+                            <a href="#">
+                              <button className="Cards_morn">Morning</button>
+                            </a>
+
+                            <a href="#">
+                              <button className="Cards_after">Afternoon</button>
+                            </a>
+
+                            <a href="#">
+                              <button className="Cards_even">Evening</button>
+                            </a>
+                          </div>
+                          <div className="Cards_button_time">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>}
+                    </div>
+                    {/* <select
+                      className="availablity form-control"
+                    
+                      id="availablity"
+                     >
+                      <option value="" disabled selected>
+                        Availablity
+                      </option>
+                      <option   onChange={this.handleAvailablityToday} value="today">
+                        Today
+                      </option>
+                      <option   onChange={this.handleAvailablityTomorrow} value="tomorrow">
+                        Tomorrow
+                      </option>
+                    </select> */}
                   <div className="gender">
                     <Select
                       className="selectGender"
@@ -531,7 +746,7 @@ export class App extends Component {
                     />
                     <div className="detect_location">{this.state.selectedGender}</div>  
                   </div>
-    
+                  <div>            
                   <Select
                       className="selectPrice"
                       value={selectedPrice}
@@ -541,12 +756,8 @@ export class App extends Component {
                     />
                     <div className="detect_location">{this.state.selectedPrice}</div>
                   </div>
+                  </div>
                 </div>
-                
-                
-                }
-              </Sticky>
-            </StickyContainer>
            
           <div className="row row_of_cards">
             {this.renderCards()}
