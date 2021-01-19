@@ -448,11 +448,11 @@ const Data = [
             },
             "tuesday": {
                 "morning": {
-                    "slot": "8-10",
+                    "slot": -1,
                     "clinicName": "clinic"
                 },
                 "evening": {
-                    "slot": "8-10",
+                    "slot": -1,
                     "clinicName": "clinic"
                 }
             },

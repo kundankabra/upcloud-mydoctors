@@ -273,7 +273,6 @@ export class App extends Component {
   }
 
   handleAvailablityToday = (e) => {
-   
     this.setState({availablityToday : e.target.value})
       const tempAvailToday = this.state.newItems.filter((item) => {
         var morningSlot = JSON.parse(JSON.stringify(item.workingHours[dayToday].morning.slot));
@@ -353,8 +352,7 @@ export class App extends Component {
     }
   }
     
-  handleGender = (selectedGender) => {
-      
+handleGender = (selectedGender) => { 
       this.setState({ selectedGender:selectedGender.value });
       let gender = selectedGender.value;
       const temp = this.state.newItems.filter((item) => {
@@ -366,7 +364,6 @@ export class App extends Component {
           return null
         }
       })
-     
       this.setState({
         selectedNewItems: temp,
         // newItems : temp
@@ -376,11 +373,9 @@ export class App extends Component {
   handlePrice = (selectedPrice) => {
     this.setState({selectedPrice : selectedPrice.value});
     let price = selectedPrice.value;
-
     const tempPrice = this.state.newItems.filter((item) => {
       if (price === "Below-250") {
         if (item.price <= 250) {
-          console.log("found", item.price)
           return item;
         }
         else {
@@ -389,7 +384,6 @@ export class App extends Component {
       }
       if (price === "251-500") {
         if (item.price > 250 && item.price <=500) {
-          console.log("Pahuchaaaaa", item.price)
           return item;
         }
         else {
@@ -398,7 +392,6 @@ export class App extends Component {
       }
       if (price === "501-750") {
         if (item.price > 500 && item.price <=750) {
-          console.log("found", item.price)
           return item;
         }
         else {
@@ -407,7 +400,6 @@ export class App extends Component {
       }
       if (price === "Above-751") {
         if (item.price > 750) {
-          console.log("found", item.price)
           return item;
         }
         else {
@@ -664,55 +656,28 @@ export class App extends Component {
                           <span className="Cards_avail">Availability</span>
                         </div>
                         <div className="availCards_row-2">
-                          <a href="#" className="Today" ><button className="btn" onClick={this.handleAvailablityToday}>today</button></a>
+                          <button className="btn Today" onClick={this.handleAvailablityToday}>today</button>
                           <hr />
-                          <a href="#" className="Tomo"><button className="btn" onClick={this.handleAvailablityTomorrow}>tomorrow</button></a>
+                          <button className="btn Tomo" onClick={this.handleAvailablityTomorrow}>tomorrow</button>
                           <hr />
                         </div>
 
                         <div className="availCards_row-3">
                           <div className="Cards_button_div">
-                            <a href="#">
                               <button className="Mon" onClick={this.handleAvailablityDays} value="mon">M</button>
-                            </a>
-
-                            <a href="#">
                               <button className="Mon" onClick={this.handleAvailablityDays} value="tue">T</button>
-                            </a>
-
-                            <a href="#">
                               <button className="Mon" onClick={this.handleAvailablityDays} value="wed">W</button>
-                            </a>
-
-                            <a href="#">
                               <button className="Mon" onClick={this.handleAvailablityDays} value="thu">T</button>
-                            </a>
-
-                            <a href="#">
                               <button className="Mon" onClick={this.handleAvailablityDays} value="fri">F</button>
-                            </a>
-
-                            <a href="#">
                               <button className="Mon" onClick={this.handleAvailablityDays} value="sat">S</button>
-                            </a>
-                            <a href="#">
                               <button className="Mon" onClick={this.handleAvailablityDays} value="sun">S</button>
-                            </a>
-                          </div>
+                            </div>
                         </div>
                         <div className="availCards_row-4">
                           <div className="Cards_button_div">
-                            <a href="#">
                               <button className="Cards_morn">Morning</button>
-                            </a>
-
-                            <a href="#">
                               <button className="Cards_after">Afternoon</button>
-                            </a>
-
-                            <a href="#">
                               <button className="Cards_even">Evening</button>
-                            </a>
                           </div>
                           <div className="Cards_button_time">
 
