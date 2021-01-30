@@ -1,0 +1,153 @@
+handlePrice = (selectedPrice) => {
+    this.setState({selectedPrice : selectedPrice.value});
+    let userFilters = this.state.filters;
+    let ul, ll;
+    userFilters.price = selectedPrice.value;
+    this.setState({filters: userFilters})
+    console.log(this.state.filters);
+    if(selectedPrice.value === "Below-250"){
+      ul = 250;
+      ll = 0
+    }
+    else if(selectedPrice.value === "251-500"){
+      ul = 500;
+      ll = 251;
+    }
+    else if(selectedPrice.value === "501-750"){
+      ul = 750;
+      ll = 501;
+    }
+    else if(selectedPrice.value === "Above-751"){
+      ul = 10000;
+      ll = 751;
+    }
+    const temp = this.state.datas.filter((data)=>{
+        if(data.price <= ul && data.price >= ll){
+          console.log("found Price",data)
+        }
+    })
+    //let price = selectedPrice.value;
+    //let currArray = this.state.newItems; 
+    // const tempPrice = currArray.filter((item) => {
+    //   if (price === "Below-250") {
+    //     if (item.price <= 250) {
+    //       return item;
+    //     }
+    //     else {
+    //       return null
+    //     }
+    //   }
+    //   if (price === "251-500") {
+    //     if (item.price > 250 && item.price <=500) {
+    //       return item;
+    //     }
+    //     else {
+    //       return null
+    //     }
+    //   }
+    //   if (price === "501-750") {
+    //     if (item.price > 500 && item.price <=750) {
+    //       return item;
+    //     }
+    //     else {
+    //       return null
+    //     }
+    //   }
+    //   if (price === "Above-751") {
+    //     if (item.price > 750) {
+    //       return item;
+    //     }
+    //     else {
+    //       return null
+    //     }
+    //   }
+    //})
+
+    // this.setState({
+    //   selectedNewItems: tempPrice,
+    // })
+  };  
+
+
+  handleGender = (selectedGender) => { 
+    this.setState({ selectedGender:selectedGender.value });
+  //let gender = selectedGender.value;
+    let userFilters = this.state.filters;
+    userFilters.gender = selectedGender.value;
+    this.setState({filters: userFilters})
+    const temp = this.state.datas.filter((data)=>{
+      if (data.gender.toLowerCase()=== this.state.filters.gender.toLowerCase()) {
+             console.log("foundGender",data)
+        //     return item;
+           }
+  })
+    // let currArray = this.state.newItems;
+    // if(this.state.selectedPrice !== null){
+    //   currArray = this.state.selectedNewItems
+    // }
+    // const temp = currArray.filter((item) => {
+    //   if (item.gender.toLowerCase()===gender.toLowerCase()) {
+    //     console.log("found",item.gender)
+    //     return item;
+    //   }
+    //   else {
+    //     return null
+    //   }
+    // })
+    // this.setState({
+    //   selectedNewItems: temp,
+    //   // newItems : temp
+    //})
+  };
+
+
+
+handleAvailablityDays =(e) => {
+    this.setState({clickedDay : e.target.value})
+    let tempDay = e.target.value
+    // switch case used
+    switch (tempDay) {
+      case "mon":
+        this.setState(prevState => ({
+          monClicked: !prevState.monClicked
+        }));
+        const tempMondayClick = this.state.newItems.filter((item) => {
+          var morningSlot = JSON.parse(JSON.stringify(item.workingHours["monday"].morning.slot));
+          var eveningSlot = JSON.parse(JSON.stringify(item.workingHours["monday"].evening.slot));
+          if(morningSlot === -1 && eveningSlot === -1){
+            return null
+          }
+          else{
+            return item
+          }
+        });
+        this.setState({selectedNewItems : tempMondayClick})
+        break;
+
+      case "tue":
+        this.setState(prevState => ({
+          tueClicked: !prevState.tueClicked
+        }));
+        break;
+
+      case "wed":
+        this.setState(prevState => ({
+          wedClicked: !prevState.wedClicked
+        }));
+        break;
+      case "thu":
+
+        break;
+      case "fri":
+
+        break;
+      case "sat":
+
+        break;
+      case "sun":
+
+        break;
+      default:
+        break;
+    }
+  }

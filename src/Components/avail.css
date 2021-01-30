@@ -49,10 +49,7 @@ hr {
     margin-right: 17px;
     margin-left: 79px;
  }
-.Today{
-   
-    width: 67px;
-    height: 70px;
+.Today{   
     margin-left: 84px;
     margin-right: 98px;
     font-family: SF Pro Display;
@@ -60,6 +57,9 @@ hr {
     font-weight: normal;
     font-size: 17px;
     line-height: 20px;
+    background-color: white;
+    outline: none;
+    border: none;
     text-decoration: none;
 }
 
@@ -68,19 +68,18 @@ hr {
 }
 
 .Tomo{
-
     text-decoration: none;
     margin-left: 84px;
     margin-right: 98px;
-width: 67px;
-height: 70px;
-font-family: SF Pro Display;
-font-style: normal;
-font-weight: normal;
-font-size: 17px;
-line-height: 20px;
-
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 20px;
+    background-color: white;
+    outline: none;
+    border: none;
 }
+
 .Tomo:hover{
     text-decoration: none;
 }

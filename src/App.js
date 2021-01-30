@@ -1,13 +1,12 @@
 import First from './Components/first';
 import Cards from './Components/Cards';
 import Data from './Components/Data';
-import Autosuggest from 'react-autosuggest';
 import './App.css';
-//import { StickyContainer, Sticky } from 'react-sticky';
 import React, { Component } from 'react';
 import Select from 'react-select';
-//import sortjsonarray from 'sort-json-array';
-import './Components/avail.css'
+import './Components/avail.css';
+import {getDoctors} from './ApiHandling/SearchDoc';
+
 
 const uniqueInfo = [
   {
@@ -34,9 +33,10 @@ const uniqueInfo = [
 ];
 
 const Gender = [
-  { value: 'male', label: 'Male' },
-  { value: 'female', label: 'Female' }
+  { value: 'male', label: 'Male' , class: 'gender' },
+  { value: 'female', label: 'Female',  class: 'gender' }
 ];
+
 
 
 var sortJsonArray = require('sort-json-array');
@@ -45,11 +45,13 @@ var sortJsonArray = require('sort-json-array');
 const uniqueSort = [
     {
       value : "pl2h",
-      label : "Price low to high"
+      label : "Price low to high",
+      class: 'price'
     }, 
     {
       value: "ph2l",
-      label : "Price high to low"
+      label : "Price high to low",
+      class: 'price'
     }, 
     {
       value : "rating",
@@ -107,41 +109,33 @@ else if(dateToday === 6){
 const Price = [
   {
     value : "Below-250",
-    label : "Below 250"
+    label : "Below 250",
+    class: "price",
+    ll:0,
+    ul:250
   }, 
   {
     value: "251-500",
-    label : "251-500"
+    label : "251-500",
+    class: "price",
+    ll:251,
+    ul:500
   }, 
   {
     value : "501-750",
-    label : "501-750"
+    label : "501-750",
+    class: "price",
+    ll:501,
+    ul:750
   }, 
   {
     value : "Above-751",
-    label : "Above 751"
+    label : "Above 751",
+    class: "price",
+    ll:751,
+    ul:10000
   }
 ];
-
-
-function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function getSuggestions(value) {
-  const escapedValue = escapeRegexCharacters(value.trim());
-  const regex = new RegExp('^' + escapedValue, 'i');
-
-  return uniqueInfo.filter(Data => regex.test(uniqueInfo.speciality));
-}
-
-function getSuggestionValue(suggestion) {
-  return suggestion.speciality;
-}
-
-function shouldRenderSuggestions() {
-  return true;
-}
 
 function renderSuggestion(suggestion) {
   return (
@@ -154,8 +148,8 @@ function renderSuggestion(suggestion) {
 
 export class App extends Component {
 
-    constructor(){
-      super();
+    constructor(props){
+      super(props);
       this.myRef = React.createRef();   //for the executeScroll function
       this.state={
         newItems: [],         //array which will render only one time after the starting search
@@ -167,28 +161,42 @@ export class App extends Component {
         datas : Data,
         availablityToday:'',
         availablityTomorrow : '',         
-        selectedGender : '',   //For gender change state,
+        selectedGender : null,   //kept null for testing an bug
         sort : '',
-        selectedPrice : '',
+        selectedPrice : null,     //kept null for testing an bug
         availToggle : false,
         clickedDay : '',
-        monClicked : false,
-        tueClicked : false,
-        wedClicked : false,
-        thuClicked : false,
-        friClicked : false,
-        satClicked : false,
-        sunClicked : false,
+        dayClicked : '',
+        filters : {
+          price: '',
+          gender: ''
+        }
       };
     }
     
-    componentDidMount() {
+ componentDidMount() {
       this.setState({ datas: Data });
       this.setState({ newItems: Data });
+     
       // this.setState({selectedNewItems:Data});
-      let filterNav = document.getElementsByClassName("filter_row");
-      var stickyTemp = filterNav.OffsetTop;
+      // const {getDoctors} = this.props;
+      // console.log(getDoctors)
+      // getDoctors('https://project31-heroku.herokuapp.com/api/v11/user/search/autoComplete')
+      // .then((data)=> console.log(data))
+      // .catch((error)=> console.log(error));
+      let temp = "a"
+      fetch('https://project31-heroku.herokuapp.com/api/v11/user/search/autoComplete/', {
+         method: 'GET',
+         body: JSON.stringify({'keyword':temp}),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          }
+     }).then(res =>res.json())
+      .then(data => console.log(data))
+       .catch(err => console.error("Error:", err)); 
     }
+     
 
     filterCity = () => {
       let distinctCity = [];
@@ -229,47 +237,56 @@ export class App extends Component {
     }
 
 
-    onChange_doc = (event, { newValue, method }) => {
-      this.setState({
-        value: newValue
-      },() => {
-        this.itemsArrayFilter();
-    });
-      
-    };
+     onChange_doc = (newValue) => {
+      //const url = `https://project31-heroku.herokuapp.com/api/v11/user/search/autoComplete`;
+    //   const url = 'http://localhost:5000/api/v11/user/search/autoComplete'
+    //   var data = {keyword: newValue.target.value}
+    //   axios.get(url,{params:{keyword:'a'}})
+    //   .then((data) => {
+    //     console.log("data",data)
+    //    })
+    //    .catch((error) => {console.log(error)})
+    console.log(getDoctors())
+       this.setState({
+         value: newValue.target.value
+       },() => {
+         this.itemsArrayFilter();  
+     });
+     };  
 
   handleSort = (sort) => {
     this.setState({sort:sort.value });
     let SORT = sort.value;  
     var des = "des"
     //price low to high
-    if (SORT == "pl2h") {
+    if (SORT === "pl2h") {
       sortJsonArray(this.state.selectedNewItems,'price')
     }
     //price high to low
-    if (SORT == "ph2l") {
+    if (SORT === "ph2l") {
       sortJsonArray(this.state.selectedNewItems,'price',des)
     }
     //Rating
-    if (SORT == "rating") {
-      sortJsonArray(this.state.selectedNewItems,'rating',des)
+    if (SORT === "rating") {
+      sortJsonArray(this.state.selectedNewItems,'avgRating',des)
     }
     //area
-    if (SORT == "area") {
+    if (SORT === "area") {
       sortJsonArray(this.state.selectedNewItems,'areaNearby')
     }
      //area
-     if (SORT == "experience") {
+     if (SORT === "experience") {
       sortJsonArray(this.state.selectedNewItems,'experience',des)
     }
   }  
 
 
-  handleAvailablity = (e) =>{
-    this.setState(prevState => ({
-      availToggle: !prevState.availToggle
-    }));
-    console.log("avail",this.state.availToggle)
+  handleAvailablity = (data) =>{
+     this.setState(prevState => ({
+       availToggle: !prevState.availToggle
+     }));
+    // console.log("avail",this.state.availToggle)
+    
   }
 
   handleAvailablityToday = (e) => {
@@ -302,130 +319,64 @@ export class App extends Component {
       this.setState({selectedNewItems : tempAvailTomorrow})
   }
 
-  handleAvailablityDays =(e) => {
-    this.setState({clickedDay : e.target.value})
-    let tempDay = e.target.value
-    // switch case used
-    switch (tempDay) {
-      case "mon":
-        this.setState(prevState => ({
-          monClicked: !prevState.monClicked
-        }));
-        const tempMondayClick = this.state.newItems.filter((item) => {
-          var morningSlot = JSON.parse(JSON.stringify(item.workingHours["monday"].morning.slot));
-          var eveningSlot = JSON.parse(JSON.stringify(item.workingHours["monday"].evening.slot));
-          if(morningSlot === -1 && eveningSlot === -1){
-            return null
-          }
-          else{
-            return item
-          }
-        });
-        this.setState({selectedNewItems : tempMondayClick})
-        break;
-
-      case "tue":
-        this.setState(prevState => ({
-          tueClicked: !prevState.tueClicked
-        }));
-        break;
-
-      case "wed":
-        this.setState(prevState => ({
-          wedClicked: !prevState.wedClicked
-        }));
-        break;
-      case "thu":
-
-        break;
-      case "fri":
-
-        break;
-      case "sat":
-
-        break;
-      case "sun":
-
-        break;
-      default:
-        break;
-    }
+  handleAvailablityDays = (e) =>{
+    this.setState({dayClicked:e.target.value});
+    console.log(this.state.dayClicked);
+    this.renderNew();
   }
-    
-handleGender = (selectedGender) => { 
-      this.setState({ selectedGender:selectedGender.value });
-      let gender = selectedGender.value;
-      const temp = this.state.newItems.filter((item) => {
-        if (item.gender.toLowerCase()===gender.toLowerCase()) {
-          console.log("found",item.gender)
-          return item;
-        }
-        else {
-          return null
-        }
-      })
-      this.setState({
-        selectedNewItems: temp,
-        // newItems : temp
-      })
-    };
 
-  handlePrice = (selectedPrice) => {
-    this.setState({selectedPrice : selectedPrice.value});
-    let price = selectedPrice.value;
-    const tempPrice = this.state.newItems.filter((item) => {
-      if (price === "Below-250") {
-        if (item.price <= 250) {
-          return item;
-        }
-        else {
-          return null
-        }
-      }
-      if (price === "251-500") {
-        if (item.price > 250 && item.price <=500) {
-          return item;
-        }
-        else {
-          return null
-        }
-      }
-      if (price === "501-750") {
-        if (item.price > 500 && item.price <=750) {
-          return item;
-        }
-        else {
-          return null
-        }
-      }
-      if (price === "Above-751") {
-        if (item.price > 750) {
-          return item;
-        }
-        else {
-          return null
-        }
-      }
-    })
-
-    this.setState({
-      selectedNewItems: tempPrice,
-    })
-  };  
-
-    onSuggestionsFetchRequested = ({ value }) => {
-      this.setState({
-        suggestions: getSuggestions(value)
-      });
-    };
+  availablity(morningslot, eveningslot){
+     if(morningslot === "-1" && eveningslot === "-1"){
+       return false;
+     }
+     else{
+       return true;
+     }
+  }
   
-    onSuggestionsClearRequested = () => {
-      this.setState({
-        suggestions: []
-      });
-    };
+  
+  renderNew =()=>{
+    let upper =10000 , lower = 0;
+      Price.map((pri)=>{
+        if(this.state.filters.price === pri.value){
+          upper = pri.ul;
+          lower = pri.ll
+        }
+      })
+      const {workingHours=[]} = this.state.datas;
+      const {day = {}} = workingHours;
+      const {morning={}} = day;
+      const {slot=''} = morning;
+    const temp = []
+      this.state.datas.map((data)=>{  
+        let morningSlot = JSON.parse(JSON.stringify(data.slot));
+        let eveningSlot = JSON.parse(JSON.stringify(data.slot));  
+        console.log("hehhed",morningSlot,eveningSlot)
+        if((data.gender === this.state.filters.gender || this.state.filters.gender === "") && (data.price <= upper && data.price >= lower) 
+     && this.availablity(morningSlot,eveningSlot) ){
+        console.log("newData",data)
+         temp.push(data);         
+      }
+    })
+    console.log("hahaha",temp)
+    this.setState({selectedNewItems:temp})
+  }
 
-    executeScroll = () => this.myRef.current.scrollIntoView()
+  handleFilter = (filter) => {
+    // let filterName = filter.value
+    //console.log(filter.class)
+    for(let key in this.state.filters){
+      if(filter.class === key){
+        let temp = this.state.filters;
+        temp[key] = filter.value;
+        this.setState({filters : temp})
+      }
+    }
+    console.log("filters",this.state.filters)
+    this.renderNew();
+  }
+
+    executeScroll = () => this.myRef.current.scrollIntoView() // for exceuting scroll
 
     itemsArrayFilter = () => {
       const items = Data.filter(data => {
@@ -439,7 +390,7 @@ handleGender = (selectedGender) => {
 
           if (data.area.toLowerCase().includes(this.state.searchLocality.toLowerCase())) {
 
-            if (data.doctorName.toLowerCase().includes(this.state.value.toLowerCase()) || data.speciality.toLowerCase().includes(this.state.value.toLowerCase()) || data.clinicName.toLowerCase().includes(this.state.value.toLowerCase())) {
+            if (data.name.toLowerCase().includes(this.state.value.toLowerCase()) || data.primarySpeciality.toLowerCase().includes(this.state.value.toLowerCase()) || data.clinicName.toLowerCase().includes(this.state.value.toLowerCase())) {
               { this.executeScroll() }
               return data;
             }
@@ -450,9 +401,7 @@ handleGender = (selectedGender) => {
         }    
     }) 
     this.setState({
-      newItems : items
-    })
-    this.setState({
+      newItems : items,
       selectedNewItems : items
     })
   }
@@ -463,12 +412,12 @@ handleGender = (selectedGender) => {
         <div className="col-4 col-xs-12 cardsColumn">
           <Cards
             experience={data.experience}
-            doctorName={data.doctorName}
-            speciality={data.speciality}
-            rating={data.rating}
+            doctorName={data.name}
+            speciality={data.primarySpeciality}
+            rating={data.avgRating}
             clinicName={data.clinicName}
             price={data.price}
-            feedbackNumber={data.feedbackNumber}
+            feedbackNumber={data.feedbackCount}
             areaNearby={data.areaNearby}
             area={data.area}
             city={data.city}
@@ -477,20 +426,7 @@ handleGender = (selectedGender) => {
     }
     
   render(){
-    const { value, suggestions, selectedGender, newItems, selectedPrice} = this.state;
-    const input_doc = {
-      placeholder: "Search for Doctors, Clinics, Services & more..",
-      value,
-      onChange: this.onChange_doc,
-      className : "search_doctors form-control"
-    };
-
-    const input_doc_InFilter = {
-      placeholder: "Search for Doctors, Clinics, Services & more..",
-      value,
-      onChange: this.onChange_doc,
-      className : "search_doctorsInFilter form-control"
-    };
+    const {selectedGender, selectedPrice} = this.state;
 
 // 
     
@@ -503,10 +439,8 @@ handleGender = (selectedGender) => {
     return(
   <div>
       <First/>
-
         <div class="parallax">
           <div className="row first_search_row ">
-
             <div className="col-sm-3 search_city_col">
               {/* ---Search for city ---*/}
               <div className="form-group has-search">
@@ -517,7 +451,7 @@ handleGender = (selectedGender) => {
                   id="state"
                 >
                   <option value="" disabled selected>
-                    City
+                    City 
                   </option>
                   {this.filterCity().map((state, index) => (
                     <option value={state} key={index}>
@@ -525,7 +459,7 @@ handleGender = (selectedGender) => {
                     </option>
                   ))}
                 </select>
-                <div className="detect_location"><a>detect my location</a></div>
+                <div className="detect_location">detect my location</div>
               </div>
               {/* <input type="text" className="search_city form-control" onChange={(e)=>this.searchFromCity(e)} autoComplete="off" placeholder="City" /> */}
               {/*---Search for locality--*/}
@@ -552,7 +486,7 @@ handleGender = (selectedGender) => {
                       {locality}
                     </option>
                   ))}
-                </select>  
+                </select>
               </div>
             </div>
 
@@ -560,15 +494,11 @@ handleGender = (selectedGender) => {
             <div className="col-sm-6 search_doctors_col">
               <div className="input form-group has-search">
                 <span class="fa fa-search form-control-doctors"></span>
-                <Autosuggest
-                  suggestions={suggestions}
-                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                  getSuggestionValue={getSuggestionValue}
-                  shouldRenderSuggestions={shouldRenderSuggestions}
-                  renderSuggestion={renderSuggestion}
-                  inputProps={input_doc} />
-                {/* <div className="detect_location">{this.state.selectedNewItems.length}</div> */}
+                <input
+                  className="search_doctors form-control"
+                  onKeyPress={this.onChange_doc}
+                  placeholder="Search for Doctors, Clinics, Services & more.."
+                />
               </div>
             </div>
 
@@ -578,7 +508,7 @@ handleGender = (selectedGender) => {
           </div>
         </div>  
 {/* ------------------Container of cards and filter--------------------------------------------------------------------------- */}
-      <div ref={this.myRef} className="Cards_container">
+      <div ref={this.myRef}  className="Cards_container">
         
     {/*------------ if no doctor found----------------- */}
        
@@ -589,53 +519,50 @@ handleGender = (selectedGender) => {
     {/* -------------if Doctors are Found----------------- */}
 
         {this.state.selectedNewItems.length > 0 &&
-        <div>
-            
-                <div className="row filter_row">
-                  <div className="col-sm-4 cityandlocality_colInFilter">
+            <div>
 
-                    <div className="form-group has-search">
-                      {/* <span class="fa fa-search form-control-city"></span> */}
-                      <select
-                        className="search_cityInFilter form-control"
-                        onChange={this.searchFromCity}
-                        id="state"
-                      >
-                        <option value="" disabled selected>
-                          City
+              <div className="row filter_row">
+                <div className="col-sm-4 cityandlocality_colInFilter">
+
+                  <div className="form-group has-search">
+                    {/* <span class="fa fa-search form-control-city"></span> */}
+                    <select
+                      className="search_cityInFilter form-control"
+                      onChange={this.searchFromCity}
+                      id="state"
+                    >
+                      <option value="" disabled selected>
+                        City
                         </option>
-                        {this.filterCity().map((state, index) => (
-                          <option value={state} key={index}>
-                            {state}
-                          </option>
-                        ))}
-                      </select>
-                      <div className="detect_location"><a>detect my location</a></div>
-                    </div>
-
-                    <div className="form-group has-search">
-                      {/* <span class="fa fa-search form-control-locality"></span> */}
-                      <input type="text" className="search_localityInFilter form-control" placeholder="Locality" />
-                    </div>
+                      {this.filterCity().map((state, index) => (
+                        <option value={state} key={index}>
+                          {state}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="detect_location">detect my location</div>
                   </div>
 
-                  <div className="col-sm-4 doctor_colInFilter">
-                    
-                    <div className="">
-                      {/* <span class="fa fa-search form-control-doctors"></span> */}
-                      <Autosuggest
-                        suggestions={suggestions}
-                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                        getSuggestionValue={getSuggestionValue}
-                        shouldRenderSuggestions={shouldRenderSuggestions}
-                        renderSuggestion={renderSuggestion}
-                        inputProps={input_doc_InFilter} />
-                      <div className="detect_location">You have {this.state.selectedNewItems.length} search results</div>
-                    </div>
+                  <div className="form-group has-search">
+                    {/* <span class="fa fa-search form-control-locality"></span> */}
+                    <input type="text" className="search_localityInFilter form-control" placeholder="Locality" />
+                  </div>
+                </div>
 
-                      {/*=====SORT======*/}
-                    <div className="">  
+                <div className="col-sm-4 doctor_colInFilter">
+
+                  <div className="">
+                    {/* <span class="fa fa-search form-control-doctors"></span> */}
+                  <input
+                    className="search_doctorsInFilter form-control"
+                    onKeyPress={this.onChange_doc}
+                    placeholder="Search for Doctors, Clinics, Services & more.."
+                  />
+                    <div className="detect_location">You have {this.state.selectedNewItems.length} search results</div>
+                  </div>
+
+                  {/*=====SORT======*/}
+                  <div className="">
                     <Select
                       className="selectSort"
                       value={this.state.sort}
@@ -643,50 +570,51 @@ handleGender = (selectedGender) => {
                       options={uniqueSort}
                       placeholder="Sort"
                     />
-                    <div className="detect_location">{this.state.sort}</div>                    
-                    </div>      
+                    <div className="detect_location">{this.state.sort}</div>
                   </div>
+                </div>
 
-                  <div class="col-sm-4 availablity_colinFilter">
-                   <div> <button className="availablity" onClick={this.handleAvailablity}>Availability</button>
-                  {this.state.availToggle &&
-                    <div className="availDropDown">
-                      <div className="availCards">
-                        <div className="availCards_row-1">
-                          <span className="Cards_avail">Availability</span>
-                        </div>
-                        <div className="availCards_row-2">
-                          <button className="btn Today" onClick={this.handleAvailablityToday}>today</button>
-                          <hr />
-                          <button className="btn Tomo" onClick={this.handleAvailablityTomorrow}>tomorrow</button>
-                          <hr />
-                        </div>
+                <div class="col-sm-4 availablity_colinFilter" >
+                  <div >     
+                    <button className="availablity"  onClick={this.handleAvailablity}>Availability</button>
+                    {this.state.availToggle &&
+                      <div className="availDropDown"  >
+                        <div className="availCards">
+                          <div className="availCards_row-1">
+                            <span className="Cards_avail">Availability</span>
+                          </div>
+                          <div className="availCards_row-2">
+                            <button className="Today" onClick={this.handleAvailablityToday}>today</button>
+                            <hr />
+                            <button className="Tomo" onClick={this.handleAvailablityTomorrow}>tomorrow</button>
+                            <hr />
+                          </div>
 
-                        <div className="availCards_row-3">
-                          <div className="Cards_button_div">
-                              <button className="Mon" onClick={this.handleAvailablityDays} value="mon">M</button>
-                              <button className="Mon" onClick={this.handleAvailablityDays} value="tue">T</button>
-                              <button className="Mon" onClick={this.handleAvailablityDays} value="wed">W</button>
-                              <button className="Mon" onClick={this.handleAvailablityDays} value="thu">T</button>
-                              <button className="Mon" onClick={this.handleAvailablityDays} value="fri">F</button>
-                              <button className="Mon" onClick={this.handleAvailablityDays} value="sat">S</button>
-                              <button className="Mon" onClick={this.handleAvailablityDays} value="sun">S</button>
+                          <div className="availCards_row-3">
+                            <div className="Cards_button_div">
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="monday">M</button>
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="tuesday">T</button>
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="wednesday">W</button>
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="thursday">T</button>
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="friday">F</button>
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="saturday">S</button>
+                              <button className="Mon" onClick={this.handleAvailablityDays} value="sunday">S</button>
                             </div>
-                        </div>
-                        <div className="availCards_row-4">
-                          <div className="Cards_button_div">
+                          </div>
+                          <div className="availCards_row-4">
+                            <div className="Cards_button_div">
                               <button className="Cards_morn">Morning</button>
                               <button className="Cards_after">Afternoon</button>
                               <button className="Cards_even">Evening</button>
-                          </div>
-                          <div className="Cards_button_time">
+                            </div>
+                            <div className="Cards_button_time">
 
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>}
-                    </div>
-                    {/* <select
+                      </div>}
+                  </div>
+                  {/* <select
                       className="availablity form-control"
                     
                       id="availablity"
@@ -705,29 +633,29 @@ handleGender = (selectedGender) => {
                     <Select
                       className="selectGender"
                       value={selectedGender}
-                      onChange={this.handleGender}
+                      onChange={this.handleFilter}
                       options={Gender}
                       placeholder="Gender"
                     />
-                    <div className="detect_location">{this.state.selectedGender}</div>  
+                    <div className="detect_location">{this.state.filters.gender}</div>
                   </div>
-                  <div>            
-                  <Select
+                  <div>
+                    <Select
                       className="selectPrice"
                       value={selectedPrice}
-                      onChange={this.handlePrice}
+                      onChange={this.handleFilter}
                       options={Price}
                       placeholder="Price"
                     />
-                    <div className="detect_location">{this.state.selectedPrice}</div>
-                  </div>
+                    <div className="detect_location">{this.state.filters.price}</div>
                   </div>
                 </div>
-           
-          <div className="row row_of_cards">
-            {this.renderCards()}
-          </div>
-          </div>
+              </div>
+
+              <div  className="row row_of_cards">
+                {this.renderCards()}
+              </div>
+            </div>
         }
         
       </div>
