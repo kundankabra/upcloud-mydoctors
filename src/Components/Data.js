@@ -1067,7 +1067,7 @@ const Data = [
                     "clinicName": "clinic"
                 },
                 "evening": {
-                    "slot": "8-10",
+                    "slot": -1,
                     "clinicName": "clinic"
                 }
             },

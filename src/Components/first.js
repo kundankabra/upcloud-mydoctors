@@ -14,30 +14,30 @@ var address
 
 
 //this is a plain javascript api just to get users Lat and Long iff he has provided permission
-// if (navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(getPosition);
-//   }
-//   function getPosition(position){
-//     console.log(position.coords.latitude, position.coords.longitude);
-//     lat  =     position.coords.latitude;
-//     long =     position.coords.longitude;
-//   }
+ if (navigator.geolocation) {
+     navigator.geolocation.getCurrentPosition(getPosition);
+   }
+   function getPosition(position){
+     console.log(position.coords.latitude, position.coords.longitude);
+     lat  =     position.coords.latitude;
+     long =     position.coords.longitude;
+   }
 
 //'AIzaSyDZGcCRjQ7IlinYxqWdMjGZPVd37YZH2VU' The api key
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 //Geocode.setApiKey("AIzaSyDZGcCRjQ7IlinYxqWdMjGZPVd37YZH2VU");
 // set response language. Defaults to english.
-//Geocode.setLanguage("en");
-//Geocode.fromLatLng("19.8811498", "75.36054519").then(
-//   response => {
-//     address = response.results[0].formatted_address;
-//     console.log(address);
-//     document.write(address)
-//   },
-//   error => {
-//     console.error(error);
-//   }
-// );
+// Geocode.setLanguage("en");
+// Geocode.fromLatLng("19.8811498", "75.36054519").then(
+//    response => {
+//      address = response.results[0].formatted_address;
+//      console.log(address);
+//      document.write(address)
+//    },
+//    error => {
+//      console.error(error);
+//    }
+//  );
 
 
 class first extends React.Component{  

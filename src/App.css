@@ -8,12 +8,10 @@ html {
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: fixed; 
     padding-top: 315px;
     background-position-y: 100px;
-    background-color: black;
-    position: sticky;
-    
+    background-color: black;    
 }
 
 #hey{
@@ -162,6 +160,33 @@ html {
   width: 270px !important;
   height: 50px !important;
 }
+
+/* change this */
+.autoComplete{
+  margin-left: 5.66rem; 
+  z-index: 999;
+    width: 768px;
+    top: 40px;
+    border-bottom: 1px solid;
+    padding: 16px 0px 16px 0px;
+    position: absolute;
+    background-color: white;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0rem rgba(0, 123, 255, 0.25);
+}
+
+.autoCompleteOption{
+  display: flex;
+  padding: 5px 10px;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.autoCompleteOption:hover{
+  background-color: #eee ;
+}
+
 
 .css-yk16xz-control{
   border-radius: 15px !important;

@@ -3,7 +3,7 @@ import './Cards.css'
 import image5 from '../images/image5.jpeg'
 
 function Cards(props){
-    console.log(props)
+    //console.log(props)
         return (
                 <div className="cards">
                     {/* first row consisting years of experience, image, Name, Speciality, Area, verification and bookmark */}

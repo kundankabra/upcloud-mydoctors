@@ -5,39 +5,12 @@ import './App.css';
 import React, { Component } from 'react';
 import Select from 'react-select';
 import './Components/avail.css';
-import {getDoctors} from './ApiHandling/SearchDoc';
-
-
-const uniqueInfo = [
-  {
-    speciality: "Dentist",
-  },
-  {
-    speciality: "Ayurveda",
-  },
-  {
-    speciality: "Dermatologist",
-  },
-  {
-    speciality: "Gynecologist",
-  },
-  {
-    speciality: "Homoeopath",
-  },
-  {
-    speciality: "General Physician",
-  },
-  {
-    speciality: "ENT",
-  }
-];
+import { getAutoComplete} from './ApiHandling/DoctorsInformation';
 
 const Gender = [
   { value: 'male', label: 'Male' , class: 'gender' },
   { value: 'female', label: 'Female',  class: 'gender' }
 ];
-
-
 
 var sortJsonArray = require('sort-json-array');
 // pl2h: price low to high
@@ -103,9 +76,6 @@ else if(dateToday === 6){
 }
 
 
-
-
-
 const Price = [
   {
     value : "Below-250",
@@ -166,36 +136,104 @@ export class App extends Component {
         selectedPrice : null,     //kept null for testing an bug
         availToggle : false,
         clickedDay : '',
-        dayClicked : '',
+        dayClicked : 'sunday',
+        autoCompleteID : null,   
+        autoCompleteJson : [
+         
+        [
+            "AYURVEDA",
+            "GYNAECOLOGIST",
+            "DERMATOLOGIST",
+            "CARDIOLOGIST",
+            "GENERAL PHYSICIAN",
+            "HOMOEOPATH",
+            "DENTIST"
+          ],
+        [
+            "Radhe Raman Tiwari",
+            "Murtaza Shabbir Kankroliwala",
+            "Virat Kohli",
+            "Ridhwik Kalgaonkar",
+            "Ridhwik Kalgaonkar"
+        ],
+        [
+            {
+                "clinicOneName": "Royal Challengers Bangalore",
+                "clinicTwoName": "Royal Challengers Bangalore"
+            },
+            {
+                "clinicOneName": "Murtaza",
+                "clinicTwoName": ""
+            },
+            {
+                "clinicOneName": "abc",
+                "clinicTwoName": "ttttt"
+            }
+        ],
+        [
+            {
+                "clinicOne": [
+                    "BOTOX",
+                    "PSORIASIS",
+                    "   LICHEN PLANUS",
+                    "   ECZEMA"
+                ],
+                "clinicTwo": null
+            },
+            {
+                "clinicOne": [
+                    "BOTOX",
+                    " LICHEN PLANUS",
+                    " BLISTERING DISORDERS"
+                ],
+                "clinicTwo": null
+            },
+            {
+                "clinicOne": [
+                    "BEARD",
+                    " SYPHILIS"
+                ],
+                "clinicTwo": [
+                    "CYSTS",
+                    " SUN SPOTS"
+                ]
+            },
+            {
+                "clinicOne": [
+                    "SYPHILIS",
+                    " ECZEMA",
+                    " PIGMENTATION",
+                    " GONORRHEA",
+                    " LICHEN PLANUS"
+                ],
+                "clinicTwo": null
+            }
+        ]
+    ]
+        ,
         filters : {
           price: '',
           gender: ''
-        }
+        },
+        isAutocompleteOpen :false
       };
     }
     
- componentDidMount() {
-      this.setState({ datas: Data });
-      this.setState({ newItems: Data });
-     
-      // this.setState({selectedNewItems:Data});
-      // const {getDoctors} = this.props;
-      // console.log(getDoctors)
-      // getDoctors('https://project31-heroku.herokuapp.com/api/v11/user/search/autoComplete')
-      // .then((data)=> console.log(data))
-      // .catch((error)=> console.log(error));
-      let temp = "a"
-      fetch('https://project31-heroku.herokuapp.com/api/v11/user/search/autoComplete/', {
-         method: 'GET',
-         body: JSON.stringify({'keyword':temp}),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          }
-     }).then(res =>res.json())
-      .then(data => console.log(data))
-       .catch(err => console.error("Error:", err)); 
-    }
+      componentDidMount() {
+        this.setState({ datas: Data });
+        this.setState({ newItems: Data });  
+      }
+    
+      async autoComplete(){
+        console.log(this.state.autoCompleteID)
+       const response = await getAutoComplete(this.state.autoCompleteID)
+       .then((response)=>{
+         console.log(response)
+         this.setState({autoCompleteJson:response.data})
+      })
+       .catch((err)=>{console.log(err)})
+        }
+    
      
 
     filterCity = () => {
@@ -214,7 +252,7 @@ export class App extends Component {
             distinctLocality.push(item.area);
           }
         })
-        console.log(distinctLocality,this.state.searchCity)
+       // console.log(distinctLocality,this.state.searchCity)
         distinctLocality = [...new Set(distinctLocality)];
         return distinctLocality;
     };
@@ -238,17 +276,19 @@ export class App extends Component {
 
 
      onChange_doc = (newValue) => {
-      //const url = `https://project31-heroku.herokuapp.com/api/v11/user/search/autoComplete`;
-    //   const url = 'http://localhost:5000/api/v11/user/search/autoComplete'
-    //   var data = {keyword: newValue.target.value}
-    //   axios.get(url,{params:{keyword:'a'}})
-    //   .then((data) => {
-    //     console.log("data",data)
-    //    })
-    //    .catch((error) => {console.log(error)})
-    console.log(getDoctors())
-       this.setState({
-         value: newValue.target.value
+      this.setState({
+         value: newValue.target.value,
+         autoCompleteID : newValue.target.value
+       },() => {
+         this.autoComplete();
+         //this.itemsArrayFilter();  
+     });
+     };
+     onChange_doc1 = (newValue,e) => {
+       e.preventDefault();
+      this.setState({
+         value: newValue,
+         autoCompleteID : newValue
        },() => {
          this.itemsArrayFilter();  
      });
@@ -286,7 +326,6 @@ export class App extends Component {
        availToggle: !prevState.availToggle
      }));
     // console.log("avail",this.state.availToggle)
-    
   }
 
   handleAvailablityToday = (e) => {
@@ -343,22 +382,18 @@ export class App extends Component {
           lower = pri.ll
         }
       })
-      const {workingHours=[]} = this.state.datas;
-      const {day = {}} = workingHours;
-      const {morning={}} = day;
-      const {slot=''} = morning;
     const temp = []
       this.state.datas.map((data)=>{  
-        let morningSlot = JSON.parse(JSON.stringify(data.slot));
-        let eveningSlot = JSON.parse(JSON.stringify(data.slot));  
+        let morningSlot = JSON.stringify(data.workingHours[this.state.dayClicked].morning.slot);
+        let eveningSlot = JSON.stringify(data.workingHours[this.state.dayClicked].evening.slot);  
         console.log("hehhed",morningSlot,eveningSlot)
         if((data.gender === this.state.filters.gender || this.state.filters.gender === "") && (data.price <= upper && data.price >= lower) 
-     && this.availablity(morningSlot,eveningSlot) ){
-        console.log("newData",data)
+     && this.availablity(morningSlot,eveningSlot)){
+        //console.log("newData",data)
          temp.push(data);         
       }
     })
-    console.log("hahaha",temp)
+    //console.log("hahaha",temp)
     this.setState({selectedNewItems:temp})
   }
 
@@ -404,6 +439,30 @@ export class App extends Component {
       newItems : items,
       selectedNewItems : items
     })
+  }
+
+    renderAutoComplete = () => {
+      return(
+        <div>
+        {this.state.autoCompleteJson[0].map((auto,index) => ( 
+          <div>
+            { index <= 4 ?
+            <div className="autoCompleteOption" onClick={(e)=>{this.onChange_doc1(auto,e); this.setState({isAutocompleteOpen:false})}}><span>{auto}</span> <span>speciality</span></div>
+          : <div></div>}
+          </div>
+      ))
+            }
+            {this.state.autoCompleteJson[1].map((auto,index) => (
+          
+          <div>
+            { index <= 2 ?
+            <div className="autoCompleteOption" onClick={(e)=>{this.onChange_doc1(auto,e); this.setState({isAutocompleteOpen:false})}}><span>{auto}</span> <span>doctor</span></div>
+          : <div></div>}
+          </div>
+      ))
+            }
+      </div>
+      );
   }
 
     renderCards = () => {
@@ -492,14 +551,22 @@ export class App extends Component {
 
             {/* ---Search for speciality, doctors, clinic and services---*/}
             <div className="col-sm-6 search_doctors_col">
-              <div className="input form-group has-search">
+              <div className="input form-group has-search"  >
                 <span class="fa fa-search form-control-doctors"></span>
                 <input
                   className="search_doctors form-control"
-                  onKeyPress={this.onChange_doc}
+                  onChange={this.onChange_doc}
                   placeholder="Search for Doctors, Clinics, Services & more.."
+                  value={this.state.value}
+                  onClick={()=>this.setState({isAutocompleteOpen:true})}
+                 
                 />
               </div>
+              {this.state.isAutocompleteOpen &&
+              <div className="autoComplete">
+                    {this.renderAutoComplete()}
+              </div>
+               }
             </div>
 
             <div className="col-sm-3">
@@ -555,7 +622,8 @@ export class App extends Component {
                     {/* <span class="fa fa-search form-control-doctors"></span> */}
                   <input
                     className="search_doctorsInFilter form-control"
-                    onKeyPress={this.onChange_doc}
+                    onChange={this.onChange_doc}
+                    value={this.state.value}
                     placeholder="Search for Doctors, Clinics, Services & more.."
                   />
                     <div className="detect_location">You have {this.state.selectedNewItems.length} search results</div>
