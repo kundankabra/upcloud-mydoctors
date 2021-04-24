@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/upcloud-mydoctors/static/css/main.2f7d1131.chunk.css",
-    "main.js": "/upcloud-mydoctors/static/js/main.bf01756f.chunk.js",
-    "main.js.map": "/upcloud-mydoctors/static/js/main.bf01756f.chunk.js.map",
+    "main.css": "/upcloud-mydoctors/static/css/main.047ab40d.chunk.css",
+    "main.js": "/upcloud-mydoctors/static/js/main.75ac5e97.chunk.js",
+    "main.js.map": "/upcloud-mydoctors/static/js/main.75ac5e97.chunk.js.map",
     "runtime-main.js": "/upcloud-mydoctors/static/js/runtime-main.4504f63b.js",
     "runtime-main.js.map": "/upcloud-mydoctors/static/js/runtime-main.4504f63b.js.map",
     "static/css/2.7973b908.chunk.css": "/upcloud-mydoctors/static/css/2.7973b908.chunk.css",
-    "static/js/2.731b5217.chunk.js": "/upcloud-mydoctors/static/js/2.731b5217.chunk.js",
-    "static/js/2.731b5217.chunk.js.map": "/upcloud-mydoctors/static/js/2.731b5217.chunk.js.map",
+    "static/js/2.212ff04d.chunk.js": "/upcloud-mydoctors/static/js/2.212ff04d.chunk.js",
+    "static/js/2.212ff04d.chunk.js.map": "/upcloud-mydoctors/static/js/2.212ff04d.chunk.js.map",
     "index.html": "/upcloud-mydoctors/index.html",
     "static/css/2.7973b908.chunk.css.map": "/upcloud-mydoctors/static/css/2.7973b908.chunk.css.map",
-    "static/css/main.2f7d1131.chunk.css.map": "/upcloud-mydoctors/static/css/main.2f7d1131.chunk.css.map",
-    "static/js/2.731b5217.chunk.js.LICENSE.txt": "/upcloud-mydoctors/static/js/2.731b5217.chunk.js.LICENSE.txt",
+    "static/css/main.047ab40d.chunk.css.map": "/upcloud-mydoctors/static/css/main.047ab40d.chunk.css.map",
+    "static/js/2.212ff04d.chunk.js.LICENSE.txt": "/upcloud-mydoctors/static/js/2.212ff04d.chunk.js.LICENSE.txt",
     "static/media/font-awesome.min.css": "/upcloud-mydoctors/static/media/fontawesome-webfont.f691f37e.woff",
     "static/media/image5.00a3987d.jpeg": "/upcloud-mydoctors/static/media/image5.00a3987d.jpeg",
-    "static/media/App.css": "/upcloud-mydoctors/static/media/pic.9060860d.png"
+    "static/media/main.css": "/upcloud-mydoctors/static/media/pic.9060860d.png"
   },
   "entrypoints": [
     "static/js/runtime-main.4504f63b.js",
     "static/css/2.7973b908.chunk.css",
-    "static/js/2.731b5217.chunk.js",
-    "static/css/main.2f7d1131.chunk.css",
-    "static/js/main.bf01756f.chunk.js"
+    "static/js/2.212ff04d.chunk.js",
+    "static/css/main.047ab40d.chunk.css",
+    "static/js/main.75ac5e97.chunk.js"
   ]
 }
