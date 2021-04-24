@@ -11,7 +11,7 @@ export const getAutoComplete = async (id) => {
     keyword: id
   })
   .then((response)=> {
-    console.log(response.data)
+    //console.log(response.data)
     return response.data
   })
   .catch((error)=> {
@@ -19,6 +19,22 @@ export const getAutoComplete = async (id) => {
 });
 };
 
+export const getDoctorCard = async (id) => {
+  if (id === null){
+    return null
+  }
+  return await axios
+  .post('https://project31-heroku.herokuapp.com/api/v11/user/doctorcardSearch/',{
+    keyword: id
+  })
+  .then((response)=> {
+    //console.log("doctors CARD",response.data)
+    return response.data
+  })
+  .catch((error)=> {
+    console.log(error);
+});
+};
 
 // export const getDoctorSearch = async (id) => {
 //   return await axios
