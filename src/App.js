@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import First from './Components/first';
-import Main from './Components/main'
+import Doc_navbar from './Components/Doc_navbar';
+import Main from './Components/Doc_main'
 export class App extends Component {
   render() {
     return (
       <div>
-           <First/>
+           <Doc_navbar/>
            <Main/>
       </div>
     )

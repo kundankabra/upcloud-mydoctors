@@ -30,25 +30,21 @@ html {
       margin-right: 85px !important;  
   }
   
-  .has-search .form-control {
+  /* .has-search .form-control {
       padding-left: 2.375rem;
   }
   
-      /* the search icon */
-      .fa{
-      font-size: 20px !important;
-      }
   
     .input{
         margin: auto;
         align-items: center;
     }
-  
+   */
     .cityandlocality_colInFilter{
       display: flex; 
       justify-content: center;
       /* flex-basis: 30.3333% !important; */
-      padding-left: 0 !important;
+      padding-left: 0 !important;   
       padding-right: 0 !important;
     }
   
@@ -79,12 +75,14 @@ html {
       border-radius: 20px !important;
       width: 180px !important;
       height: 60px !important;
+      padding-left: 2.375rem !important;
     }
   
     .search_cityInFilter{
       border-radius: 15px !important;
       width: 171px !important;
       height: 50px !important;
+      padding-left: 2.375rem !important;
     }
   
     .detect_location{
@@ -106,13 +104,15 @@ html {
    /* margin-right: 30% !important; */
       margin-left: 5% !important;
       padding-top: 10px !important;
-  }
+      font-size: 20px !important;
+    }
   
     .search_locality{
       border-radius: 20px !important;
       width: 180px !important;
       height: 60px !important;
       margin-left: 20px;
+      padding-left: 2.375rem !important;
     }
   
     .search_localityInFilter{
@@ -120,6 +120,7 @@ html {
       width: 171px !important;
       height: 50px !important;
       margin-left: 40px;
+      padding-left: 2.375rem !important;
     }
   
   
@@ -151,8 +152,7 @@ html {
         border-radius: 20px !important;
         width: 770px !important;
         height: 60px !important;
-       /* margin-left: 14% !important; */
-        transition: 0.2s;
+        padding-left: 2.375rem !important;
   }
   
   .search_doctorsInFilter{
@@ -160,6 +160,7 @@ html {
     border-radius: 15px !important;
     width: 270px !important;
     height: 50px !important;
+    padding-left: 2.375rem !important;
   }
   
   /* change this */

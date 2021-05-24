@@ -5,12 +5,12 @@ import image5 from '../images/image5.jpeg'
 function Cards(props){
     //console.log(props)
         return (
-                <div className="cards">
+                <div className="Doctor_cards">
                     {/* first row consisting years of experience, image, Name, Speciality, Area, verification and bookmark */}
                     <div className="row Cards_firstRow">
                         {/* experience */}
                         <div className="col-1">
-                            <span className="Cards_experience">{props.experience}</span>
+                            <span className="Cards_experience" title="Years of experience">{props.experience}</span>
                         </div>
                         {/* image of doctor */}
                         <div className="col-2 Cards_docPic">

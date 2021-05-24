@@ -1,4 +1,4 @@
-.cards{
+.Doctor_cards{
     position: relative;   
     width: 383px;
     height: 200px;
@@ -21,6 +21,7 @@
     position: absolute;
     width: 17px;
     height: 17px;
+    cursor: default;
     font-style: normal;
     font-weight: bold;
     font-size: 13px;
