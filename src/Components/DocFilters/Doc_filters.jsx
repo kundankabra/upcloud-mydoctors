@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import Cards from "./Cards";
+import Cards from "./Doc_Cards";
 import Data from "./Data";  // Data is a json of dummy data for testing purpose
-import "./Doc_main.css";
+import "./Doc_filters.css";
 import Select from "react-select";
 import "./available_dropdown.css";
 import {
   getAutoComplete,
   getDoctorCard,
-} from "../ApiHandling/DoctorsInformation";
-import upArrow from '../images/up-arrow.png';
+} from "../../ApiHandling/DoctorsInformation";
+import upArrow from '../../images/up-arrow.png';
+import spinner from '../../gif/Spinner-5.gif'
 
 
 //for gender
@@ -107,6 +108,8 @@ const Price = [
 ];
 
 export class main extends Component {
+
+
   constructor(props) {
     super(props);
     this.myRef = React.createRef(); //for the executeScroll function
@@ -116,7 +119,7 @@ export class main extends Component {
       doctorsCardInfo: [], // an arry of doctors card coming from backend
       searchCity: "", //City input change state
       searchLocality: "", //Locality input change state
-      value: "", //Speciality, doctors and clinic input change state
+      value: this.props.autocompleteValue, //Speciality, doctors and clinic input change state
       suggestions: [], //For suggestions on speciality input
       datas: Data,
       availablityToday: "",
@@ -127,7 +130,6 @@ export class main extends Component {
       availToggle: false,
       clickedDay: "",
       dayClicked: "sunday",
-      autoCompleteID: null,
       //below state has default data which will be displayed when the user clicks on search for the first time.
       //(only speciality and doctor name will be displayed in the auto-complete for now. Check "RenderAutoComplete" function to see how it's been displayed )
       // after the user enters some letters into the search, the autocomplete coming after that would be from backend
@@ -155,18 +157,23 @@ export class main extends Component {
       },
       isAutocompleteOpen: false,
       up_Arrow: false,          //for scroll to top
+      autoCompleteID:this.props.autocompleteValue,
     };
   }
 
   //The Data here is the json created for testing purpose in the Data.js
-  componentDidMount() {
+ async componentDidMount(props) {
     // this.setState({ datas: Data });
     // this.setState({ newItems: Data });
+    console.log("the winnnn",this.state.autoCompleteID);
+    this.GetCards();
     var scrollcomponent = this;
     document.addEventListener("scroll",function(e){
       scrollcomponent.toggleVisibility();
     })
   }
+
+
 
   //for scrolling to the top's visiblity.Function called from component did mount
   toggleVisibility(){
@@ -280,6 +287,7 @@ export class main extends Component {
   handleSort = (sort) => {
     this.setState({ sort: sort.value });
     let SORT = sort.value;
+    console.log("sort",sort.value);
     var des = "des";
     //price low to high
     if (SORT === "pl2h") {
@@ -735,7 +743,11 @@ export class main extends Component {
            
            {/*------------ if no doctor found----------------- */}
  
-           {this.state.selectedNewItems.length === 0 && <h3>No doctor found</h3>}
+           {this.state.selectedNewItems.length === 0 && 
+              <div className="loadinSpinner">
+                  <img src={spinner} alt="Loading"/>
+              </div>
+           }
  
  
            {/* -------------if Doctors are Found----------------- */}

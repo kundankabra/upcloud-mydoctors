@@ -115,7 +115,6 @@ export class main extends Component {
       searchCity: "", //City input change state
       searchLocality: "", //Locality input change state
       value: "", //Speciality, doctors and clinic input change state
-      suggestions: [], //For suggestions on speciality input
       datas: Data,
       availablityToday: "",
       availablityTomorrow: "",

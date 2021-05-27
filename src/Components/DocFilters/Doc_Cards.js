@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import './Cards.css'
-import image5 from '../images/image5.jpeg'
+import './Doc_Cards.css'
+import image5 from '../../images/image5.jpeg'
 
 function Cards(props){
     //console.log(props)

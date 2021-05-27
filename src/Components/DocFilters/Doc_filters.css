@@ -4,7 +4,7 @@ html {
   
   .parallax {
       min-height: 17rem; 
-      background-image: url('../images//pic.png');
+      background-image: url('../../images//pic.png');
       background-position: center;
       background-size: 100%;
       background-repeat: no-repeat;
@@ -210,4 +210,8 @@ html {
     width: 1rem;
     height: auto;
     
+  }
+
+  .loadinSpinner{
+    text-align: center;
   }

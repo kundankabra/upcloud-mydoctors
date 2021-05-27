@@ -1,0 +1,65 @@
+/*Desktop view above 1200 screen size*/
+
+.navbar{
+    background-color: #000000;
+    height: 100px;
+    vertical-align: bottom;
+    align-items: flex-end;
+    padding: 0.5rem 4.5rem 0.6rem 4.5rem;
+}
+.nav-link{
+    color: #ffffff;
+    margin-right: 54px;
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 300;
+    font-family: 'Poppins';
+
+}
+.nav-link:hover{
+    color: #ffffff;
+}
+
+/*For small amd medium devices*/
+@media(min-width: 576px) and (max-width: 800px){
+    .navbar{
+        background-color: #000000;
+        height: 100px;
+        vertical-align: bottom;
+        align-items: flex-end;
+        padding: 0rem 0rem 0.6rem 0rem;
+    }
+    .nav-link{
+        color: #ffffff;
+        margin-right: 25px;
+        font-size: 10px;
+        line-height: 22px;
+        font-weight: 300;
+        font-family: 'Poppins';
+    }
+    .nav-link:hover{
+        color: #ffffff;
+    }
+}
+
+/*FOR MEDIUM AND LARGE DEVICES*/
+@media(min-width: 800px) and (max-width: 1200px){
+    .navbar{
+        background-color: #000000;
+        height: 100px;
+        vertical-align: bottom;
+        align-items: flex-end;
+        padding: 0.3rem 1.5rem 0.7rem 4.5rem;
+    }
+    .nav-link{
+        color: #ffffff;
+        margin-right: 33px;
+        font-size: 15px;
+        line-height: 22px;
+        font-weight: 300;
+        font-family: 'Poppins';
+    }
+    .nav-link:hover{
+        color: #ffffff;
+    }   
+}

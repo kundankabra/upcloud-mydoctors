@@ -1,0 +1,164 @@
+.Doc_search_parallax{
+    min-height: 513px;
+   background-image: url('../../svg/mainsvg.svg');
+   background-position:center;
+   background-size: 100%;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+    padding-top:290px;
+    /* background-size:contain; */
+    /* background-position: center center; */
+}
+
+.first_search_row{
+    margin-left: 85px !important;
+    margin-right: 85px !important;  
+}
+
+.search_city_col{
+    padding-right: 0px !important;
+    padding-left: 0px !important ;
+}
+
+/* search icon of city field */
+.has-search .form-control-city {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 1.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+  /* margin-right: 30% !important;*/
+  margin-left: 2% !important;
+  margin-top: 1%;
+  padding-top: 10px !important;
+}
+
+.search_city{
+  border-radius: 20px !important;
+  width: 17rem !important;
+  height: 60px !important;
+  padding-left: 2.375rem !important;
+}
+
+.detect_location{
+    text-align: center;
+  }
+  /* search icon of locality field */
+  .has-search .form-control-locality {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 1.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+ /* margin-right: 30% !important; */
+    margin-left: 6% !important;
+    margin-top: 1% !important;
+    padding-top: 10px !important;
+    font-size: 20px !important;
+  }
+
+  .search_locality{
+    border-radius: 20px !important;
+    width: 180px !important;
+    height: 60px !important;
+    margin-left: 20px;
+    padding-left: 2.375rem !important;
+  }
+
+  /* search icon of doctors field */
+  .has-search .form-control-doctors {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 1.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+    margin-left: 1% !important;
+    margin-top: 1% !important;
+}
+
+  .search_doctors{
+      border-radius: 20px !important;
+      width: 770px !important;
+      height: 60px !important;
+      padding-left: 2.375rem !important;
+}
+
+/* change this */
+.Doc_search_autoComplete{
+    margin-left: 0.10%; 
+    z-index: 999;
+      width: 768px;
+      top: 4rem;
+      border-bottom: 1px solid;
+      padding: 16px 0px 16px 0px;
+      position: absolute;
+      background-color: transparent;
+      backdrop-filter: blur(24px);
+      border-radius: 10px;
+      /* border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px; */
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0rem rgba(0, 123, 255, 0.25);
+  }
+  
+  .Doc_search_autoCompleteOption{
+    display: flex;
+    padding: 5px 10px;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .Doc_search_autoCompleteOption:hover{
+    background-color: #eee ;
+  }
+  
+
+
+
+
+/*For small amd medium devices*/
+@media(min-width: 576px) and (max-width: 800px){
+
+
+    .Doc_search_parallax{
+        min-height: 513px;
+       background-image: url('../../svg/mainsvg.svg');
+       background-position:center;
+       background-size: 100%;
+       background-repeat: no-repeat;
+       background-attachment: fixed;
+        padding-top:250px;
+        background-size:contain;
+        /* background-position: center center; */
+   }
+
+}
+
+
+/*FOR MEDIUM AND LARGE DEVICES*/
+@media(min-width: 800px) and (max-width: 1200px){
+
+    .Doc_search_parallax{
+        min-height: 513px;
+       background-image: url('../../svg/mainsvg.svg');
+       background-position:center;
+       background-size: 100%;
+       background-repeat: no-repeat;
+       background-attachment: fixed;
+        padding-top:250px;
+        background-size:contain;
+        /* background-position: center center; */
+   }
+
+}
