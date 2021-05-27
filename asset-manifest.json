@@ -1,26 +1,36 @@
 {
   "files": {
-    "main.css": "/upcloud-mydoctors/static/css/main.e0af2015.chunk.css",
-    "main.js": "/upcloud-mydoctors/static/js/main.fe3a0bbb.chunk.js",
-    "main.js.map": "/upcloud-mydoctors/static/js/main.fe3a0bbb.chunk.js.map",
+    "main.css": "/upcloud-mydoctors/static/css/main.9ef88e8e.chunk.css",
+    "main.js": "/upcloud-mydoctors/static/js/main.dfc6287f.chunk.js",
+    "main.js.map": "/upcloud-mydoctors/static/js/main.dfc6287f.chunk.js.map",
     "runtime-main.js": "/upcloud-mydoctors/static/js/runtime-main.4504f63b.js",
     "runtime-main.js.map": "/upcloud-mydoctors/static/js/runtime-main.4504f63b.js.map",
     "static/css/2.7973b908.chunk.css": "/upcloud-mydoctors/static/css/2.7973b908.chunk.css",
-    "static/js/2.212ff04d.chunk.js": "/upcloud-mydoctors/static/js/2.212ff04d.chunk.js",
-    "static/js/2.212ff04d.chunk.js.map": "/upcloud-mydoctors/static/js/2.212ff04d.chunk.js.map",
+    "static/js/2.a7439707.chunk.js": "/upcloud-mydoctors/static/js/2.a7439707.chunk.js",
+    "static/js/2.a7439707.chunk.js.map": "/upcloud-mydoctors/static/js/2.a7439707.chunk.js.map",
     "index.html": "/upcloud-mydoctors/index.html",
     "static/css/2.7973b908.chunk.css.map": "/upcloud-mydoctors/static/css/2.7973b908.chunk.css.map",
-    "static/css/main.e0af2015.chunk.css.map": "/upcloud-mydoctors/static/css/main.e0af2015.chunk.css.map",
-    "static/js/2.212ff04d.chunk.js.LICENSE.txt": "/upcloud-mydoctors/static/js/2.212ff04d.chunk.js.LICENSE.txt",
+    "static/css/main.9ef88e8e.chunk.css.map": "/upcloud-mydoctors/static/css/main.9ef88e8e.chunk.css.map",
+    "static/js/2.a7439707.chunk.js.LICENSE.txt": "/upcloud-mydoctors/static/js/2.a7439707.chunk.js.LICENSE.txt",
+    "static/media/Spinner-5.e9202c75.gif": "/upcloud-mydoctors/static/media/Spinner-5.e9202c75.gif",
+    "static/media/doctor1.f8a675ac.png": "/upcloud-mydoctors/static/media/doctor1.f8a675ac.png",
+    "static/media/doctor2.af7d3a8c.png": "/upcloud-mydoctors/static/media/doctor2.af7d3a8c.png",
+    "static/media/doctor3.8f33e7b0.png": "/upcloud-mydoctors/static/media/doctor3.8f33e7b0.png",
+    "static/media/doctor4.06e0b3ca.png": "/upcloud-mydoctors/static/media/doctor4.06e0b3ca.png",
     "static/media/font-awesome.min.css": "/upcloud-mydoctors/static/media/fontawesome-webfont.f691f37e.woff",
     "static/media/image5.00a3987d.jpeg": "/upcloud-mydoctors/static/media/image5.00a3987d.jpeg",
-    "static/media/Doc_main.css": "/upcloud-mydoctors/static/media/pic.89e57ccf.png"
+    "static/media/issue1.7237734d.png": "/upcloud-mydoctors/static/media/issue1.7237734d.png",
+    "static/media/issue2.5e069aa5.png": "/upcloud-mydoctors/static/media/issue2.5e069aa5.png",
+    "static/media/issue3.28eda462.png": "/upcloud-mydoctors/static/media/issue3.28eda462.png",
+    "static/media/issue4.543ab549.png": "/upcloud-mydoctors/static/media/issue4.543ab549.png",
+    "static/media/Doc_search.css": "/upcloud-mydoctors/static/media/mainsvg.58daab12.svg",
+    "static/media/Doc_filters.css": "/upcloud-mydoctors/static/media/pic.89e57ccf.png"
   },
   "entrypoints": [
     "static/js/runtime-main.4504f63b.js",
     "static/css/2.7973b908.chunk.css",
-    "static/js/2.212ff04d.chunk.js",
-    "static/css/main.e0af2015.chunk.css",
-    "static/js/main.fe3a0bbb.chunk.js"
+    "static/js/2.a7439707.chunk.js",
+    "static/css/main.9ef88e8e.chunk.css",
+    "static/js/main.dfc6287f.chunk.js"
   ]
 }
